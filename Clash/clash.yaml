@@ -1,0 +1,335 @@
+port: 7890 # HTTP 代理端口
+socks-port: 7891 # Socks 端口
+redir-port: 7892 # Redir 端口
+mixed-port: 7893 # 混合端口
+allow-lan: true # 允许局域网连接
+bind-address: "*" # 地址绑定
+mode: rule # 规则模式
+log-level: info # 日志级别
+ipv6: false # IPV6开关
+external-controller: 127.0.0.1:9090
+
+dns:
+  enable: true # 不使用系统 DNS
+  ipv6: false # 关闭 IPV6
+  listen: 0.0.0.0:53 # dns 监听
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - "*.lan"
+    - localhost.ptlogin2.qq.com
+    - +.srv.nintendo.net
+    - +.stun.playstation.net
+    - +.msftconnecttest.com
+    - +.msftncsi.com
+    - +.xboxlive.com
+    - msftconnecttest.com
+    - xbox.*.microsoft.com
+    - "*.battlenet.com.cn"
+    - "*.battlenet.com"
+    - "*.blzstatic.cn"
+    - "*.battle.net"
+  nameserver: # 默认 DNS 服务
+    - 223.5.5.5
+    - 119.29.29.29
+  fallback: # 国外 DNS 服务器
+    - https://cloudflare-dns.com/dns-query
+    - https://dns.google/dns-query
+    - https://dns.alidns.com/dns-query
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    ipcidr:
+      - 240.0.0.0/4
+#========= 建立锚点 =========#
+
+# 策略组引用
+pr:
+  &a3 {
+    type: select,
+    proxies:
+      [
+        ♻️ 自动选择,
+        🚀 手动切换,
+        🇭🇰 香港节点,
+        🇨🇳 台湾节点,
+        🇯🇵 日本节点,
+        🇰🇷 韩国节点,
+        🇺🇲 美国节点,
+        🇩🇪 德国节点,
+        🇬🇧 英国节点,
+        🇫🇷 法国节点,
+        🇳🇱 荷兰节点,
+        🇸🇬 新加坡节点,
+        🇨🇦 加拿大节点,
+        🇻🇳 越南节点,
+        🇮🇳 印度节点,
+        🇷🇺 俄罗斯节点,
+        🇹🇷 土耳其节点,
+        🇮🇪 爱尔兰节点,
+        🇲🇾 马来西亚节点,
+        🇹🇭 泰国节点,
+        🇿🇦 南非节点,
+        DIRECT,
+      ],
+  }
+p:
+  &a1 {
+    type: http,
+    interval: 3600,
+    health-check:
+      {
+        enable: true,
+        url: http://www.gstatic.com/generate_204,
+        interval: 1800,
+      },
+  }
+auto:
+  &a4 {
+    type: url-test,
+    lazy: true,
+    url: http://www.gstatic.com/generate_204,
+    interval: 900,
+    use: [SSRDOG, XX-AI],
+  }
+use: &a2 { type: select, use: [SSRDOG, XX-AI] }
+c: &a6 { type: http, behavior: classical, interval: 3600 }
+d: &a5 { type: http, behavior: domain, interval: 3600 }
+i: &a7 { type: http, behavior: ipcidr, interval: 3600 }
+
+proxy-providers:
+  SSRDOG:
+    <<: *a1
+    url: https://no1-svip.urlapi-dodo.me/s?t=da957f30f95dfebcfd2af0039a7b2896
+    path: ./proxy_providers/subscribe1.yaml
+
+  XX-AI:
+    <<: *a1
+    url: http://8.210.142.138:8899/s?token=c0c013daad3aad513ce8eb199d37e253
+    path: ./proxy_providers/subscribe2.yaml
+
+proxies: []
+proxy-groups:
+  # SSRDOG 节点组
+  - name: SSRDOG
+    type: select
+    use: [SSRDOG]
+
+  # XX-AI 节点组
+  - name: XX-AI
+    type: select
+    use: [XX-AI]
+
+  # 手动切换组
+  - name: 🚀 手动切换
+    type: select
+    proxies:
+      - SSRDOG
+      - XX-AI
+      - ♻️ 自动选择
+      - 🇭🇰 香港节点
+      - 🇨🇳 台湾节点
+      - 🇯🇵 日本节点
+      - 🇰🇷 韩国节点
+      - 🇺🇲 美国节点
+      - 🇩🇪 德国节点
+      - 🇬🇧 英国节点
+      - 🇫🇷 法国节点
+      - 🇳🇱 荷兰节点
+      - 🇸🇬 新加坡节点
+      - 🇨🇦 加拿大节点
+      - 🇻🇳 越南节点
+      - 🇮🇳 印度节点
+      - 🇷🇺 俄罗斯节点
+      - 🇹🇷 土耳其节点
+      - 🇮🇪 爱尔兰节点
+      - 🇲🇾 马来西亚节点
+      - 🇹🇭 泰国节点
+      - 🇿🇦 南非节点
+      - DIRECT
+
+  #分流分组
+  - { name: 🌏 全球加速, <<: *a3 }
+  - { name: 🛸 pikpak, <<: *a3 }
+  - { name: 🍎 苹果服务, <<: *a3 }
+  - { name: 📺 哔哩哔哩, <<: *a3 }
+  - {
+      name: 🤖 OpenAi,
+      type: select,
+      proxies: [🇺🇲 美国节点, 🇬🇧 英国节点, 🚀 手动切换],
+    }
+  - {
+      name: 🛸 Claude,
+      type: select,
+      proxies: [🇺🇲 美国节点, 🇬🇧 英国节点, 🚀 手动切换],
+    }
+  - { name: 🎬 国际媒体, <<: *a3 }
+  - { name: 🌌 谷歌服务, <<: *a3 }
+  - { name: 📟 电报消息, <<: *a3 }
+  - { name: 🐦 推特服务, <<: *a3 }
+  - { name: 🎮 游戏平台, <<: *a3 }
+  - { name: 🆎 AdBlock, type: select, proxies: [REJECT, 🚀 手动切换] }
+  - { name: 🐟 兜底分流, <<: *a3 }
+
+  #节点分组
+  - { name: ♻️ 自动选择, <<: *a4 }
+  - { name: 🇭🇰 香港节点, <<: *a4, filter: "港|HK|(?i)Hong" }
+  - { name: 🇨🇳 台湾节点, <<: *a4, filter: "台|湾|TW|(?i)Taiwan" }
+  - { name: 🇯🇵 日本节点, <<: *a4, filter: "日|东京|JP|(?i)Japan" }
+  - { name: 🇰🇷 韩国节点, <<: *a4, filter: "韩|KR|(?i)Korea" }
+  - { name: 🇺🇲 美国节点, <<: *a4, filter: "美|US|(?i)States|American" }
+  - { name: 🇩🇪 德国节点, <<: *a4, filter: "德|DE|(?i)Germany" }
+  - { name: 🇬🇧 英国节点, <<: *a4, filter: "英|UK|(?i)Kingdom|Britain" }
+  - { name: 🇫🇷 法国节点, <<: *a4, filter: "法|FR|(?i)France" }
+  - { name: 🇳🇱 荷兰节点, <<: *a4, filter: "荷|NL|(?i)Netherlands" }
+  - { name: 🇸🇬 新加坡节点, <<: *a4, filter: "坡|SG|(?i)Singapore" }
+  - { name: 🇨🇦 加拿大节点, <<: *a4, filter: "拿|CA|(?i)Canada" }
+  - { name: 🇻🇳 越南节点, <<: *a4, filter: "越|VN|(?i)Vietnam" }
+  - { name: 🇮🇳 印度节点, <<: *a4, filter: "(印度|IN|(?i)India)(?!尼西亚)" }
+  - { name: 🇷🇺 俄罗斯节点, <<: *a4, filter: "俄|RU|(?i)Russia" }
+  - { name: 🇹🇷 土耳其节点, <<: *a4, filter: "土|TR|(?i)Turkey" }
+  - { name: 🇮🇪 爱尔兰节点, <<: *a4, filter: "爱|IE|(?i)Ireland" }
+  - { name: 🇲🇾 马来西亚节点, <<: *a4, filter: "马来西亚|MY|(?i)Malaysia" }
+  - { name: 🇹🇭 泰国节点, <<: *a4, filter: "泰国|TH|(?i)Thailand" }
+  - { name: 🇿🇦 南非节点, <<: *a4, filter: "南非|ZA|(?i)South Africa" }
+
+# 分流规则
+rule-providers:
+  Direct:
+    {
+      <<: *a5,
+      url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Direct/Direct.yaml,
+      path: ./ruleset/Direct.yaml,
+    }
+  Lan:
+    {
+      <<: *a6,
+      url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Lan/Lan.yaml,
+      path: ./ruleset/Lan.yaml,
+    }
+  Download:
+    {
+      <<: *a6,
+      url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Download/Download.yaml,
+      path: ./ruleset/Download.yaml,
+    }
+  Ad:
+    {
+      <<: *a5,
+      url: https://ghp.ci/https://raw.githubusercontent.com/Cats-Team/AdRules/main/adrules_domainset.txt,
+      path: ./ruleset/anti-ad-clash.yaml,
+    }
+  OpenAi:
+    {
+      <<: *a6,
+      url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/OpenAI/OpenAI.yaml,
+      path: ./ruleset/OpenAi.yaml,
+    }
+  Claude:
+    {
+      <<: *a6,
+      url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Claude/Claude.yaml,
+      path: ./ruleset/Claude.yaml,
+    }
+  BiliBili:
+    {
+      <<: *a6,
+      url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/BiliBili/BiliBili.yaml,
+      path: ./ruleset/BiliBili.yaml,
+    }
+  Bahamut:
+    {
+      <<: *a6,
+      url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Bahamut/Bahamut.yaml,
+      path: ./ruleset/Bahamut.yaml,
+    }
+  GlobalMedia:
+    {
+      <<: *a6,
+      url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml,
+      path: ./ruleset/GlobalMedia.yaml,
+    }
+  Apple:
+    {
+      <<: *a6,
+      url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple_Classical.yaml,
+      path: ./ruleset/Apple.yaml,
+    }
+  Github:
+    {
+      <<: *a6,
+      url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GitHub/GitHub.yaml,
+      path: ./ruleset/Github.yaml,
+    }
+  Microsoft:
+    {
+      <<: *a6,
+      url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Microsoft/Microsoft.yaml,
+      path: ./ruleset/Microsoft.yaml,
+    }
+  Google:
+    {
+      <<: *a6,
+      url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Google/Google.yaml,
+      path: ./ruleset/Google.yaml,
+    }
+  Telegram:
+    {
+      <<: *a6,
+      url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Telegram/Telegram.yaml,
+      path: ./ruleset/Telegram.yaml,
+    }
+  Twitter:
+    {
+      <<: *a6,
+      url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Twitter/Twitter.yaml,
+      path: ./ruleset/Twitter.yaml,
+    }
+  Game:
+    {
+      <<: *a6,
+      url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Game/Game.yaml,
+      path: ./ruleset/Game.yaml,
+    }
+  ChinaIP:
+    {
+      <<: *a7,
+      url: https://cdn.jsdelivr.net/gh/soffchen/GeoIP2-CN@release/clash-rule-provider.yml,
+      path: ./ruleset/ChinaIP.yaml,
+    }
+  ProxyLite:
+    {
+      <<: *a6,
+      url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/ProxyLite/ProxyLite.yaml,
+      path: ./ruleset/ProxyLite.yaml,
+    }
+
+  # 分流Policy
+rules:
+  - IP-CIDR,8.219.220.18/32,🛸 pikpak
+  - DOMAIN-KEYWORD,pikpak,🛸 pikpak
+  - RULE-SET,Direct,DIRECT
+  - RULE-SET,Lan,DIRECT
+  - RULE-SET,Download,DIRECT
+  - RULE-SET,Ad,🆎 AdBlock
+  - RULE-SET,OpenAi,🤖 OpenAi
+  - RULE-SET,Claude,🛸 Claude
+  - RULE-SET,BiliBili,📺 哔哩哔哩
+  - RULE-SET,Bahamut,📺 哔哩哔哩
+  - RULE-SET,GlobalMedia,🎬 国际媒体
+  - RULE-SET,Apple,🍎 苹果服务
+  - RULE-SET,Github,🌏 全球加速
+  - RULE-SET,Microsoft, 🌏 全球加速
+  - RULE-SET,Google,🌌 谷歌服务
+  - RULE-SET,Telegram,📟 电报消息
+  - RULE-SET,Twitter,🌏 全球加速
+  - RULE-SET,Game,🎮 游戏平台
+  - RULE-SET,ProxyLite,🌏 全球加速
+  - RULE-SET,ChinaIP,DIRECT
+  - GEOIP,CN,DIRECT
+  - MATCH,🐟 兜底分流
+# TUN模式是通过在操作系统上安装一个虚拟网卡来实现的，它可以接管所有的网络流量，并将流量转发至Clash，然后由Clash发出请求
+# Windows 系统中如何启用TUN模式
+# 1、运行 Clash For Windows, 确保使用规则模式，并可以联网
+# 2、点击 General中的Service Mode右侧的Manage按钮，在弹出窗口中选择schtasks，安装服务模式。安装完成后，应用程序会自动重启，Service Mode右侧的地球图标变为绿色表示安装成功
+# 3、点击 General中的TUN Mode右侧的开关以启动TUN模式
