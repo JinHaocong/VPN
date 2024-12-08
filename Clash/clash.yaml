@@ -100,7 +100,7 @@ i: &a7 { type: http, behavior: ipcidr, interval: 3600 }
 proxy-providers:
   SSRDOG:
     <<: *a1
-    url: https://no1-svip.urlapi-dodo.me/s?t=da957f30f95dfebcfd2af0039a7b2896
+    url: https://no1-svip.urlapi-dodo.me/s?t=035c827593412f6ce05ec83fd7b6e3c4
     path: ./proxy_providers/subscribe1.yaml
 
   XX-AI:
