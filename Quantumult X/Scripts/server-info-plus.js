@@ -25,12 +25,15 @@ const paran = ["IP","ISP","地区","城市"]
 $task.fetch(myRequest).then(response => {
     console.log(response,'response')
     message = response? json2info(response.body,paras) : ""
+    console.log(message,'message')
     let ip = JSON.parse(response.body)["ip"]
+    console.log(ip,'ip')
     var myRequest1 = {
         url: base_url+ip,
         opts: opts,
         timeout: 4000
     };
+    console.log(myRequest1,'myRequest1')
     $task.fetch(myRequest1).then(response => {
         console.log(response,'response2')
         message = message + Display(response.body)
