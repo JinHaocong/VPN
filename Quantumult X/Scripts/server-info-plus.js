@@ -34,7 +34,9 @@ $task.fetch(myRequest).then(response => {
         message = message + Display(response.body)
         message = message+ "------------------------------"+"</br>"+"<font color=#6959CD>"+"<b>节点</b> ➟ " + $environment.params+ "</font>"
         message =  `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">` + message + `</p>`
-        $done({"title": "    🔎 IP.SB 查询结果", "htmlMessage": message});
+        console.log('完成')
+        console.log(message)
+        $done({"title": "🔎 IP.SB 查询结果", "htmlMessage": message});
     }, reason => {
         message = "</br></br>🛑 查询超时"
         message = `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: bold;">` + message + `</p>`
