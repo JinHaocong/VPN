@@ -14,11 +14,10 @@ const message = {
 
 $configuration.sendMessage(message).then(resolve => {
     if (resolve.ret) {
-        console.log("dnsCache Cleared!");
+        $done({"title": "🗑️ DNS缓存清除", "htmlMessage": 'DSN缓存已清除！'});
     } else {
-        console.log(resolve.error);
+        $done({"title": "🗑️ DNS缓存清除", "htmlMessage": '清除失败！'});
     }
-    $done();
 }, reject => {
-    $done();
+    $done({"title": "🗑️ DNS缓存清除", "htmlMessage": '清除失败！'});
 });
