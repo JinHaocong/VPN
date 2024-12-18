@@ -31,6 +31,8 @@ $task.fetch(myRequest).then(response => {
         timeout: 4000
     };
     $task.fetch(myRequest1).then(response => {
+        console.log(response)
+        console.log(1111)
         message = message + Display(response.body)
         console.log(message,'message')
         console.log("url: "+ base_url+ip+"\n\n"+message)
@@ -66,6 +68,8 @@ function Display(cnt) {
         score = "</br><b>"+ "<font  color=>" +"欺诈指数 " + "</font> : " + "</b>"+ "<font  color=>"+ score.replace(/"|,/g,"") +"</font></br>"
         let risk = cnt.indexOf(`"risk":`)!=-1 ?  cnt.split(`"risk":`)[1].split("\n")[0] : "NA"
         risk = "</br><b>"+ "<font  color=>" +"风险等级 " + "</font> : " + "</b>"+ "<font  color=>"+ E2C(risk.replace(/"|,/g,"")) +"</font></br>"
+        console.log(score)
+        console.log(risk)
         return (score+risk)
     } catch (e) {
         console.log('报错')
