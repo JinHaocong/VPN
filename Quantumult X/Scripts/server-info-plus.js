@@ -31,11 +31,7 @@ $task.fetch(myRequest).then(response => {
         timeout: 4000
     };
     $task.fetch(myRequest1).then(response => {
-        console.log(response)
-        console.log(1111)
         message = message + Display(response.body)
-        console.log(message,'message')
-        console.log("url: "+ base_url+ip+"\n\n"+message)
         message = message+ "------------------------------"+"</br>"+"<font color=#6959CD>"+"<b>节点</b> ➟ " + $environment.params+ "</font>"
         message =  `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">` + message + `</p>`
         $done({"title": "    🔎 IP.SB 查询结果", "htmlMessage": message});
@@ -63,19 +59,11 @@ function json2info(cnt,paras) {
 }
 
 function Display(cnt) {
-    try {
-        let score = cnt.indexOf(`"score":`)!=-1 ? cnt.split(`"score":`)[1].split("\n")[0]: "NA"
-        score = "</br><b>"+ "<font  color=>" +"欺诈指数 " + "</font> : " + "</b>"+ "<font  color=>"+ score.replace(/"|,/g,"") +"</font></br>"
-        let risk = cnt.indexOf(`"risk":`)!=-1 ?  cnt.split(`"risk":`)[1].split("\n")[0] : "NA"
-        risk = "</br><b>"+ "<font  color=>" +"风险等级 " + "</font> : " + "</b>"+ "<font  color=>"+ E2C(risk.replace(/"|,/g,"")) +"</font></br>"
-        console.log(score)
-        console.log(risk)
-        return (score+risk)
-    } catch (e) {
-        console.log('报错')
-        console.log(e)
-        console.log(e.message)
-    }
+    let score = cnt.indexOf(`"score":`)!=-1 ? cnt.split(`"score":`)[1].split("\n")[0]: "NA"
+    score = "</br><b>"+ "<font  color=>" +"欺诈指数 " + "</font> : " + "</b>"+ "<font  color=>"+ score.replace(/"|,/g,"") +"</font></br>"
+    let risk = cnt.indexOf(`"risk":`)!=-1 ?  cnt.split(`"risk":`)[1].split("\n")[0] : "NA"
+    risk = "</br><b>"+ "<font  color=>" +"风险等级 " + "</font> : " + "</b>"+ "<font  color=>"+ E2C(risk.replace(/"|,/g,"")) +"</font></br>"
+    return (score+risk)
 }
 
 //极高风险‼️、高风险⚠️ 和 中风险🟡 低风险✅
@@ -87,7 +75,7 @@ function E2C(cnt){
         res = "高风险 ⚠️"
     } else if(cnt.indexOf("medium")!=-1) {
         res = "中风险 🟡"
-    } else if(nt.indexOf("low")!=-1) {
+    } else if(cnt.indexOf("low")!=-1) {
         res = "低风险 ✅"
     }
     return res
