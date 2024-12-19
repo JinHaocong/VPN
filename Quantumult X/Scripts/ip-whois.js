@@ -57,11 +57,11 @@ const generateSuccessContent = (info) => {
 
     const isEmptyObject = (obj) => Object.keys(obj).length === 0;
 
-    const formatSection = (title, data) => {
-        if (isEmptyObject(data)) return '';
+    const formatSection = (title, data, infoData) => {
+        if (isEmptyObject(infoData)) return '';
         return `<h3 style="font-size: 14px;">${title}</h3></br>${Object.entries(data)
             .map(([key, value]) => `<b>${key}</b>: <p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">${value || ' - '}</p>`)
-            .join('</br>')}`;
+            .join('')}`;
     };
 
     const geoInfo = formatSection('🌍 地理信息', {
@@ -75,14 +75,14 @@ const generateSuccessContent = (info) => {
         '🏢 首都': info.capital,
         '📞 国家代码': info.calling_code,
         '🏴 国旗': $.lodash_get(info, 'flag.emoji')
-    });
+    }, info);
 
     const ispInfo = formatSection('🏢 连接信息', {
         '🏢 组织': connection.org,
         '🔌 ISP': connection.isp,
         '🌐 域名': connection.domain,
         '🔢 ASN': connection.asn
-    });
+    }, connection);
 
     const securityInfo = formatSection('🔒 安全状态', {
         '🕵️‍♂️ 匿名': securityMap[security.anonymous],
@@ -90,19 +90,19 @@ const generateSuccessContent = (info) => {
         '🛡️ VPN': securityMap[security.vpn],
         '🌐 Tor': securityMap[security.tor],
         '🏢 托管': securityMap[security.hosting]
-    });
+    }, security);
 
     const timezoneInfo = formatSection('🕒 时区信息', {
         '🕒 时区': timezone.id,
         '🕒 时区缩写': timezone.abbr,
         '🕒 当前时间': timezone.current_time
-    });
+    }, timezone);
 
     const currencyInfo = formatSection('💰 货币信息', {
         '💰 货币': currency.name,
         '💰 货币代码': currency.code,
         '💰 货币符号': currency.symbol
-    });
+    }, currency);
 
     return `${geoInfo}${ispInfo}${timezoneInfo}${currencyInfo}${securityInfo}<br>⏰ 执行时间: ${new Date().toTimeString().split(' ')[0]}`;
 };
