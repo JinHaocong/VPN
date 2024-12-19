@@ -54,7 +54,7 @@ let content = ''
         }
     })
     isp = isp.length > 0 ? `${isp.join('\n')}\n` : ''
-    content = `${geo}${isp}${security}执行时间: ${new Date().toTimeString().split(' ')[0]}`
+    content = `🌍 地理信息:\n${geo}🏢 服务提供商:\n${isp}🔒 安全状态:\n${security}⏰ 执行时间: ${new Date().toTimeString().split(' ')[0]}`
     if ($.isTile()) {
         await notify('IP 信息', '面板', '查询完成')
     } else if (!$.isPanel()) {
@@ -70,7 +70,7 @@ let content = ''
         await notify('IP 信息', title, content)
     })
     .finally(async () => {
-        const result = {title, content, ...arg}
+        const result = {title, content, ...arg, htmlMessage: content}
         $.log($.toStr(result))
         $.done(result)
     })
