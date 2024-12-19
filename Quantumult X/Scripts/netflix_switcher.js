@@ -93,6 +93,7 @@ let concurrency = parseInt($.getval('Helge_0x00.Netflix_Concurrency')) || 10
 
     console.log('paths')
     console.log(JSON.stringify(paths))
+    console.log(newPolicy,'newPolicy')
     // 找到切换路径，并按照路径长度排序，取路径长度最短的
     let switchPath = paths.filter(path => path[path.length - 1] === newPolicy).sort((m, n) => m.length - n.length)[0]
     console.log('switchPath')
