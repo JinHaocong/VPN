@@ -17,6 +17,7 @@ let pflag = 1; // 是否是策略，或者简单节点
 let sign = 0;
 
 const main = async () => {
+  console.log('main 执行')
   try {
     const resolve = await $configuration.sendMessage(message);
     if (resolve.error) {
@@ -34,11 +35,13 @@ const main = async () => {
 };
 
 const handleError = (error) => {
-  console.log(error);
+  console.log('handleError 执行')
+  console.log(JSON.stringify(error));
   $done();
 };
 
 const processResponse = (response) => {
+  console.log('processResponse 执行')
   output = response[message.content] ? JSON.parse(JSON.stringify(response[message.content].candidates)) : [policy];
   pflag = response[message.content] ? pflag : 0;
   console.log(`output:  ${JSON.stringify(output)}`)
@@ -50,26 +53,21 @@ const processResponse = (response) => {
 };
 
 const check = async () => {
-  const relay = calculateRelayTime(output.length);
-  
-  await Promise.all(output.map(testYTB));
-  
-  setTimeout(() => {
-    logResults();
-    if (OKList[0] && pflag === 1) {
-      console.log('开始排序');
-      reOrder(OKList);
-    } else {
-      handleNoSupport();
-    }
-  }, relay);
-};
+  console.log('check 执行')
 
-const calculateRelayTime = (length) => {
-  return Math.min(10000, Math.max(2000, length * 400));
+  await Promise.all(output.map(testYTB));
+
+  logResults();
+  if (OKList[0] && pflag === 1) {
+    console.log('开始排序');
+    await reOrder(OKList);
+  } else {
+    handleNoSupport();
+  }
 };
 
 const logResults = () => {
+  console.log('logResults 执行')
   console.log(`⛳️ 共计 ${OKList.length} 个：支持节点 ➟ ${OKList}`);
   console.log(`🏠 共计 ${NoList.length - 1} 个：${NoList}`);
   console.log(`🕹 共计 ${ErrorList.length - 1} 个：${ErrorList}`);
@@ -77,6 +75,7 @@ const logResults = () => {
 };
 
 const handleNoSupport = () => {
+  console.log('handleNoSupport 执行')
   const content = !OKList[0] 
     ? pflag === 0 
       ? `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin"><br><b>😭 该节点不支持 YouTube Premium </b><br><br>👇<br><br><font color=#FF5733>-------------------------<br><b>⟦ ${policy} ⟧ </b><br>-------------------------</font>`
@@ -86,6 +85,7 @@ const handleNoSupport = () => {
 };
 
 const reOrder = async (cnt) => {
+  console.log('reOrder 执行')
   const messageURL = {
     action: 'url_latency_benchmark',
     content: cnt
@@ -110,7 +110,7 @@ const reOrder = async (cnt) => {
 };
 
 const processReOrderResponse = (response, cnt) => {
-  console.log('resolve');
+  console.log('processReOrderResponse 执行');
   console.log(JSON.stringify(response));
   
   const output = JSON.stringify(response);
@@ -138,6 +138,7 @@ const processReOrderResponse = (response, cnt) => {
 };
 
 const finalizeReOrder = async (cnt, ping, dict) => {
+  console.log('finalizeReOrder 执行')
   console.log(`选定支持YouTube Premium：${cnt[0]}延迟数据为 👉${ping}`);
   const pingStr = ` ⚡️ 节点延迟 ➟ 「 ${ping} 」 `;
   
@@ -155,6 +156,7 @@ const finalizeReOrder = async (cnt, ping, dict) => {
 };
 
 const handleReOrderError = (cnt) => {
+  console.log('handleReOrderError 执行')
   const content = pflag === 0 && cnt[0]
     ? `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin"><br><b>⟦ ${policy} ⟧ </b><br><br>🎉 该节点支持 <b>YouTube Premium</b></p>`
     : `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin"><br><b>⟦ ${policy} ⟧ </b><br><br>⚠️ 该节点不支持 <b>YouTube Premium</b></p>`;
@@ -162,6 +164,7 @@ const handleReOrderError = (cnt) => {
 };
 
 const handleReOrderSuccess = (cnt, pingStr) => {
+  console.log('handleReOrderSuccess 执行')
   console.log(`已经切换至支持 <b>Premium</b> 的路线 ➟ ${cnt[0]}`);
   if (cronsign === 'Y') {
     $notify('📺 YouTube Premium 定时检测&切换', '🎉 已经切换至支持 Premium 的最优延迟线路👇', `${cnt[0]}\n 👉 ${pingStr}`);
@@ -171,6 +174,7 @@ const handleReOrderSuccess = (cnt, pingStr) => {
 };
 
 const testYTB = async (pname) => {
+  console.log('testYTB 执行')
   const opts = { policy: pname };
   const option = {
     url: BASE_URL,
@@ -191,12 +195,12 @@ const testYTB = async (pname) => {
       throw new Error('Error');
     }
   } catch (error) {
-    console.log(error);
-    throw error;
+    handleError(error);
   }
 };
 
 const processTestResponse = (pname, data, statusCode) => {
+  console.log('processTestResponse 执行')
   if (statusCode !== 200) {
     console.log(`${pname}：检测出错`);
     ErrorList.push(pname);
