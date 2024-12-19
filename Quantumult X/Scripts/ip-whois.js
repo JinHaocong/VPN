@@ -90,6 +90,9 @@ async function getInfo() {
     try {
         const res = await $.http.get({
             url: `https://ipwho.is`,
+            params: {
+                lang: 'zh-CN',
+            },
         })
         let body = String($.lodash_get(res, 'body'))
         try {
