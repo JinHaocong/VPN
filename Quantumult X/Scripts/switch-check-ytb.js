@@ -127,8 +127,10 @@ function ReOrder(cnt) {
         console.log(resolve.error);
     }
     if (resolve.ret) {
+        console.log(resolve.ret)
+        console.log(333)
         let output=JSON.stringify(resolve.ret);
-        console.log("节点延迟："+output);
+        console.log("节点延迟："+ output);
         //排序
         console.log("排序前: "+ array)
         if(array){
