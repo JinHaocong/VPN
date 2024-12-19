@@ -89,7 +89,7 @@ async function getInfo(ip) {
 
     try {
         const res = await $.http.get({
-            url: `https://ipwhois.app/widget.php`,
+            url: `https://ipwhois.app`,
             params: {
                 ip,
                 lang: 'zh-CN',
