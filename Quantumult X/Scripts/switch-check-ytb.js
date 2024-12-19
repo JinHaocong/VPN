@@ -36,7 +36,7 @@ function GetPolicy(cnt) {
 
 const message = {
     action: "get_customized_policy",
-    content: policy
+    // content: policy
 
 };
 
