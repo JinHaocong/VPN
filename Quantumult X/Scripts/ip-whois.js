@@ -28,7 +28,7 @@ let content = ''
     $.log($.toStr(info))
     const ip = $.lodash_get(info, 'ip') || ' - '
     title = `${ip}`
-    content = generateSuccessContent()
+    content = generateSuccessContent(info)
     if ($.isTile()) {
         await notify('IP 信息', '面板', '查询完成')
     } else if (!$.isPanel()) {
@@ -50,7 +50,7 @@ let content = ''
     })
 
 // 生成content
-const generateSuccessContent = () => {
+const generateSuccessContent = (info) => {
     const securityMap = {
         true: '✓',
         false: '✗',
