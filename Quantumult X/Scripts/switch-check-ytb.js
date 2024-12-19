@@ -4,7 +4,7 @@ const { executeType, sourcePath, params } = $environment;
 const cronsign = ['0', '-1'].includes(executeType) ? 'Y' : 'N';
 const policy = ['0', '-1'].includes(executeType) ? getPolicy(sourcePath) : params;
 
-console.log(JSON.stringify($environment));
+console.log(`$environment：${JSON.stringify($environment)}`);
 console.log(`策略组：${policy}`);
 
 const getPolicy = (cnt) => cnt?.includes('#policy=') ? decodeURIComponent(cnt.split('#policy=')[1].trim()) : '';
