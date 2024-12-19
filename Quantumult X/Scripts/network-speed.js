@@ -52,7 +52,7 @@ let content = ''
 async function notify(title, subt, desc, opts) {
     console.log(`$.lodash_get(arg, 'notify')${typeof $.lodash_get(arg, 'notify')}`)
     const notify = $.lodash_get(arg, 'notify') !== undefined ? $.lodash_get(arg, 'notify') : true;
-
+    console.log(`notify:${notify} ${typeof notify}`)
     if (notify) {
         $.msg(title, subt, desc, opts);
     } else {
