@@ -34,10 +34,10 @@ const main = async () => {
   }
 };
 
-const handleError = (error) => {
+const handleError = (error, done = true) => {
   console.log('handleError 执行')
   console.log(JSON.stringify(error));
-  $done();
+  done && $done();
 };
 
 const processResponse = (response) => {
@@ -195,7 +195,7 @@ const testYTB = async (pname) => {
       throw new Error('Error');
     }
   } catch (error) {
-    handleError(error);
+    handleError(error,false);
   }
 };
 
