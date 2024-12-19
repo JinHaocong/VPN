@@ -26,12 +26,12 @@ let content = ''
     const duration = (end - time || start) / 1000
     const speed = mb / duration
     title = `网络速率`
-    content = `<h3 style="font-size: 18px; margin-bottom: 10px;">🚀 网络速率测试结果 🚀</h3><br><br><br>` +
-        `<b>📊 下载速度:</b> <p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">${round(speed * 8, 2)} Mbps</p><br>` +
-        `<b>💾 下载速率:</b> <p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">${round(speed, 2)} MB/s</p><br>` +
-        `<b>📦 下载大小:</b> <p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">${mb} MB</p><br>` +
-        `<b>⏱️ 耗时:</b> <p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">${round(duration, 2)} 秒</p><br>` +
-        `<b>🕒 执行时间:</b> <p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">${new Date().toTimeString().split(' ')[0]}<br><br>`
+    content = `<h3 style="font-size: 14px;">🚀 网络速率测试结果 🚀</h3></br>` +
+        `<b>📊 下载速度:</b> <p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">${round(speed * 8, 2)} Mbps</p></br>` +
+        `<b>💾 下载速率:</b> <p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">${round(speed, 2)} MB/s</p></br>` +
+        `<b>📦 下载大小:</b> <p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">${mb} MB</p></br>` +
+        `<b>⏱️ 耗时:</b> <p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">${round(duration, 2)} 秒</p></br>` +
+        `<b>🕒 执行时间:</b> <p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">${new Date().toTimeString().split(' ')[0]}</p></br>`
     if ($.isTile()) {
         await notify('网络速率', '面板', '查询完成')
     } else if (!$.isPanel()) {
