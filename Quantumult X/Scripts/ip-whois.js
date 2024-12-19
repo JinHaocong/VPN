@@ -54,15 +54,15 @@ const generateSuccessContent = (info) => {
     const {security = {}, connection = {}, timezone = {}, currency = {}} = info;
 
     const securityMap = {true: '✓', false: '✗', '': '-'};
-    const securityIcons = {
-        anonymous: '🕵️‍♂️ 匿名', proxy: '🔌 代理', vpn: '🛡️ VPN',
-        tor: '🌐 Tor', hosting: '🏢 托管'
-    };
 
-    const formatSection = (title, data) =>
-        `${title}:<br>${Object.entries(data)
-            .map(([key, value]) => `${key}: ${value || ' - '}`)
-            .join('<br>')}`;
+    const isEmptyObject = (obj) => Object.keys(obj).length === 0;
+
+    const formatSection = (title, data) => {
+        if (isEmptyObject(data)) return '';
+        return `<h3 style="font-size: 18px; margin-bottom: 10px;">${title}</h3><br>${Object.entries(data)
+            .map(([key, value]) => `<b>${key}</b>: <p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">${value || ' - '}</p>`)
+            .join('<br><br>')}`;
+    };
 
     const geoInfo = formatSection('🌍 地理信息', {
         '🔢 IP': info.ip,
@@ -84,6 +84,14 @@ const generateSuccessContent = (info) => {
         '🔢 ASN': connection.asn
     });
 
+    const securityInfo = formatSection('🔒 安全状态', {
+        '🕵️‍♂️ 匿名': securityMap[security.anonymous],
+        '🔌 代理': securityMap[security.proxy],
+        '🛡️ VPN': securityMap[security.vpn],
+        '🌐 Tor': securityMap[security.tor],
+        '🏢 托管': securityMap[security.hosting]
+    });
+
     const timezoneInfo = formatSection('🕒 时区信息', {
         '🕒 时区': timezone.id,
         '🕒 时区缩写': timezone.abbr,
@@ -96,11 +104,7 @@ const generateSuccessContent = (info) => {
         '💰 货币符号': currency.symbol
     });
 
-    const securityInfo = Object.entries(security)
-        .map(([key, value]) => `${securityIcons[key] || key.toUpperCase()}: ${securityMap[value]}`)
-        .join('<br>') || '-';
-
-    return `${geoInfo}<br>${ispInfo}<br>${timezoneInfo}<br>${currencyInfo}<br>🔒 安全状态:<br>${securityInfo}<br>⏰ 执行时间: ${new Date().toTimeString().split(' ')[0]}`;
+    return `${geoInfo}${ispInfo}${timezoneInfo}${currencyInfo}${securityInfo}<br>⏰ 执行时间: ${new Date().toTimeString().split(' ')[0]}`;
 };
 
 // 通知
