@@ -15,7 +15,7 @@ let content = ''
     if ($.isTile()) {
         await notify('网络速率', '面板', '开始查询')
     }
-    const mb = $.lodash_get(arg, 'mb') || 1
+    const mb = $.lodash_get(arg, 'mb') || 10
     const bytes = mb * 1024 * 1024
     let start = Date.now()
     const res = await $.http.get({
@@ -27,7 +27,6 @@ let content = ''
     const speed = mb / duration
     title = `网络速率`
     content = `${round(speed * 8, 2)} Mbps\n${round(speed, 2)} MB/s\n耗时: ${round(duration, 2)}s\n执行时间: ${new Date().toTimeString().split(' ')[0]}`
-    console.log(`$.isTile():${$.isTile()}`)
     if ($.isTile()) {
         await notify('网络速率', '面板', '查询完成')
     } else if (!$.isPanel()) {
@@ -50,9 +49,7 @@ let content = ''
 
 // 通知
 async function notify(title, subt, desc, opts) {
-    console.log(`$.lodash_get(arg, 'notify')${typeof $.lodash_get(arg, 'notify')}`)
     const notify = $.lodash_get(arg, 'notify') !== undefined ? $.lodash_get(arg, 'notify') : true;
-    console.log(`notify:${notify} ${typeof notify}`)
     if (notify) {
         $.msg(title, subt, desc, opts);
     } else {
