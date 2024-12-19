@@ -175,6 +175,7 @@ const handleReOrderSuccess = (cnt, pingStr) => {
 
 const testYTB = async (pname) => {
   console.log('testYTB 执行')
+  console.log(`pname: ${pname}`)
   const opts = { policy: pname };
   const option = {
     url: BASE_URL,
