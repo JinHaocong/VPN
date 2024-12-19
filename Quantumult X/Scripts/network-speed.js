@@ -384,7 +384,10 @@ function Env(t, s) {
 
         done(t = {}) {
             const s = (new Date).getTime(), e = (s - this.startTime) / 1e3;
-            this.log("", `\ud83d\udd14${this.name}, \u7ed3\u675f! \ud83d\udd5b ${e} \u79d2`), this.log(), this.isSurge() || this.isShadowrocket() || this.isQuanX() || this.isLoon() || this.isStash() ? $done(t) : this.isNode() && process.exit(1)
+            this.log("", `\ud83d\udd14${this.name}, \u7ed3\u675f! \ud83d\udd5b ${e} \u79d2`)
+            this.log()
+            console.log(`t:${JSON.stringify(t)}`)
+            this.isSurge() || this.isShadowrocket() || this.isQuanX() || this.isLoon() || this.isStash() ? $done(t) : this.isNode() && process.exit(1)
         }
     }(t, s)
 }
