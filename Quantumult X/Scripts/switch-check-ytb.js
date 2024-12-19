@@ -1,281 +1,223 @@
-/***
+const BASE_URL = 'https://www.youtube.com/premium';
+const { executeType, sourcePath, params } = $environment;
 
-For Quantumult-X 598+ ONLY!!
+const cronsign = ['0', '-1'].includes(executeType) ? 'Y' : 'N';
+const policy = ['0', '-1'].includes(executeType) ? getPolicy(sourcePath) : params;
 
-[task_local]
+console.log(JSON.stringify($environment));
+console.log(`策略组：${policy}`);
 
-// UI 查询版本
-event-interaction https://raw.githubusercontent.com/KOP-XIAO/QuantumultX/master/Scripts/switch-check-ytb.js, tag=YouTube 切换, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube_Letter.png, enabled=true
+const getPolicy = (cnt) => cnt?.includes('#policy=') ? decodeURIComponent(cnt.split('#policy=')[1].trim()) : '';
 
-// cron task 版本
-0 8 * * * https://raw.githubusercontent.com/KOP-XIAO/QuantumultX/master/Scripts/switch-check-ytb.js#policy=你的策略组, tag=YouTube 定时切换, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube_Letter.png, enabled=true
+const message = { action: 'get_customized_policy' };
 
-ps. 简单粗暴的 UI-Interaction 版本。无数据持久化、粗暴延迟等待。完美主义建议使用 Helge大佬的boxjs版本 https://t.me/QuanXNews/193
+let output = [];
+let OKList = [];
+let NoList = ['不支持节点 ➟ '];
+let ErrorList = ['检测出错节点 ➟ '];
+let pflag = 1; // 是否是策略，或者简单节点
+let sign = 0;
 
-@XIAO_KOP
-
-2022-07-04
-
-**/
-
-const BASE_URL = 'https://www.youtube.com/premium'
-
-const link = { "media-url": "https://raw.githubusercontent.com/KOP-XIAO/QuantumultX/master/img/southpark/7.png" } 
-var cronsign = $environment.executeType == 0 || $environment.executeType == "0" || $environment.executeType == "-1"? "Y" : "N"
-var policy = $environment.executeType == 0 || $environment.executeType == "0" || $environment.executeType == "-1"? GetPolicy($environment.sourcePath) : $environment.params
-console.log(JSON.stringify($environment))
-console.log("策略组："+policy)
-
-function GetPolicy(cnt) {
-    if (cnt && cnt.indexOf("#policy=") !=-1) {
-        return decodeURIComponent(cnt.split("#policy=")[1].trim())
-    }else {
-        return ""
+const main = async () => {
+  try {
+    const resolve = await $configuration.sendMessage(message);
+    if (resolve.error) {
+      handleError(resolve.error);
+      return;
     }
-}
 
-const message = {
-    action: "get_customized_policy",
-    // content: policy
-
+    if (resolve.ret) {
+      processResponse(resolve.ret);
+      await check();
+    }
+  } catch (error) {
+    handleError(error);
+  }
 };
 
-var output=[]
-var OKList=[]
-var NoList=["不支持节点 ➟ "]
-var ErrorList=["检测出错节点 ➟ "]
-var pflag=1 //是否是策略，或者简单节点
-var sign=0
+const handleError = (error) => {
+  console.log(error);
+  $done();
+};
 
-$configuration.sendMessage(message).then(resolve => {
-    if (resolve.error) {
-        console.log(resolve.error);
-        $done()
-    }
-    console.log('resolve')
-    console.log(JSON.stringify(resolve))
-    if (resolve.ret) {
-        //$notify(JSON.stringify(resolve.ret))
-        output=JSON.stringify(resolve.ret[message.content])? JSON.parse(JSON.stringify(resolve.ret[message.content]["candidates"])) : [policy]
-        let candidatePolicies = lookupChildrenNode(resolve.ret, policy)
-        console.log('candidatePolicies')
-        console.log(JSON.stringify(candidatePolicies))
-        console.log('output')
-        console.log(JSON.stringify(output))
-        pflag = JSON.stringify(resolve.ret[message.content])? pflag:0
-        console.log("YouTube Premium 检测")
-        console.log("节点or策略组："+pflag)
-        if (pflag==1) {
-        console.log("节点数量："+resolve.ret[policy]["candidates"].length)
-        if(resolve.ret[policy]["candidates"].length==0) {
-            $done({"title":"YouTube Premium 检测","htmlMessage":`<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin"><br><b>😭 无有效节点</b>`});
-        }
-    }
+const processResponse = (response) => {
+  output = response[message.content] ? JSON.parse(JSON.stringify(response[message.content].candidates)) : [policy];
+  pflag = response[message.content] ? pflag : 0;
+  console.log(`output:  ${JSON.stringify(output)}`)
 
-        //$notify(typeof(output),output)
-        Check()
-        //$done({"title":"策略内容","message":output})
-    }
-    //$done();|
-}, reject => {
-    // Normally will never happen.
-    $done();
-});
+  
+  if (pflag === 1 && response[policy].candidates.length === 0) {
+    $done({ title: 'YouTube Premium 检测', htmlMessage: `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin"><br><b>😭 无有效节点</b>` });
+  }
+};
 
-function Len(cnt) {
-    return cnt.length-1
-}
-
-function Check() {
-    var relay = 2000;
-    for ( var i=0;i < output.length;i++) {
-        testYTB(output[i])
-    }
-    if (output.length<=5) {
-        relay = 2000
-    } else if (output.length<10) {
-        relay =4000
-    } else if (output.length<15) {
-        relay =6000
-    } else if (output.length<20) {
-        relay =8000
+const check = async () => {
+  const relay = calculateRelayTime(output.length);
+  
+  await Promise.all(output.map(testYTB));
+  
+  setTimeout(() => {
+    logResults();
+    if (OKList[0] && pflag === 1) {
+      console.log('开始排序');
+      reOrder(OKList);
     } else {
-        relay =10000
+      handleNoSupport();
     }
-    console.log(output.length+":"+relay)
-    setTimeout(() => {
-        console.log("⛳️ 共计 "+OKList.length+" 个：支持节点 ➟ "+ OKList)
-        console.log("🏠 共计 "+Len(NoList)+" 个："+NoList)
-        console.log("🕹 共计 "+Len(ErrorList)+" 个："+ErrorList)
-        sign = 1
-        if (OKList[0] && pflag==1) { //有支持节点、且为策略组才操作
-            console.log("开始排序")
-            ReOrder(OKList)
-            } else if (!OKList[0]){ //不支持
-                content =pflag==0 ? `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin"><br><b>😭 该节点不支持 YouTube Premium </b><br><br>👇<br><br><font color=#FF5733>-------------------------<br><b>⟦ `+policy+` ⟧ </b><br>-------------------------</font>`: `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">` + "<br>❌  <b>⟦ "+policy+ " ⟧ </b>⚠️ 切换失败<br><br><b>该策略组内未找到支持 YouTube Premium 的节点" + "<br><br><font color=#FF5733>-----------------------------<br><b>检测详情请查看JS脚本记录</b><br>-----------------------------</font>"+`</p>`
-                $done({"title":"YouTube Premium 检测&切换", "htmlMessage": content})
-            } else if (OKList[0]){ //支持, 但为节点
-                content =`<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin"><br><b> 🎉 该节点支持 YouTube Premium </b><br><br>👇<br><br><font color=#FF5733>-------------------------<br><b>⟦ `+policy+` ⟧ </b><br>-------------------------</font>`
-                $done({"title":"YouTube Premium 检测&切换", "htmlMessage": content})
-        }
-    }, relay)
-    
-}
-
-//选择最优延迟节点
-function ReOrder(cnt) {
-    const array = cnt;
-    const messageURL = {
-    action: "url_latency_benchmark",
-    content: array
+  }, relay);
 };
-    console.log('messageURL')
-    console.log(JSON.stringify(messageURL))
-    $configuration.sendMessage(messageURL).then(resolve => {
+
+const calculateRelayTime = (length) => {
+  return Math.min(10000, Math.max(2000, length * 400));
+};
+
+const logResults = () => {
+  console.log(`⛳️ 共计 ${OKList.length} 个：支持节点 ➟ ${OKList}`);
+  console.log(`🏠 共计 ${NoList.length - 1} 个：${NoList}`);
+  console.log(`🕹 共计 ${ErrorList.length - 1} 个：${ErrorList}`);
+  sign = 1;
+};
+
+const handleNoSupport = () => {
+  const content = !OKList[0] 
+    ? pflag === 0 
+      ? `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin"><br><b>😭 该节点不支持 YouTube Premium </b><br><br>👇<br><br><font color=#FF5733>-------------------------<br><b>⟦ ${policy} ⟧ </b><br>-------------------------</font>`
+      : `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin"><br>❌  <b>⟦ ${policy} ⟧ </b>⚠️ 切换失败<br><br><b>该策略组内未找到支持 YouTube Premium 的节点<br><br><font color=#FF5733>-----------------------------<br><b>检测详情请查看JS脚本记录</b><br>-----------------------------</font></p>`
+    : `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin"><br><b> 🎉 该节点支持 YouTube Premium </b><br><br>👇<br><br><font color=#FF5733>-------------------------<br><b>⟦ ${policy} ⟧ </b><br>-------------------------</font>`;
+  $done({ title: 'YouTube Premium 检测&切换', htmlMessage: content });
+};
+
+const reOrder = async (cnt) => {
+  const messageURL = {
+    action: 'url_latency_benchmark',
+    content: cnt
+  };
+
+  console.log('messageURL');
+  console.log(JSON.stringify(messageURL));
+
+  try {
+    const resolve = await $configuration.sendMessage(messageURL);
     if (resolve.error) {
-        console.log(resolve.error);
+      handleError(resolve.error);
+      return;
     }
+
     if (resolve.ret) {
-        console.log('resolve')
-        console.log(JSON.stringify(resolve))
-        let output=JSON.stringify(resolve.ret);
-        console.log("节点延迟："+ output);
-        //排序
-        console.log("排序前: "+ array)
-        if(array){
-            try {
-        array.sort(function (a,b) {
-            console.log(a+" VS "+b)
-        return (resolve.ret?.[a]?.[1]!=-1 && resolve.ret?.[b]?.[1] !=-1)? resolve.ret[a][1]-resolve.ret[b][1] : resolve.ret[b][1]
-    })
-    } catch (err) {
-        console.log(err)
+      processReOrderResponse(resolve.ret, cnt);
     }
-    }  
-    console.log("排序后: "+array)
-    let Ping =resolve.ret[array[0]]
-        const dict = { [policy] : array[0]};
-        if(array[0]) {
-            console.log("选定支持YouTube Premium："+array[0]+"延迟数据为 👉"+Ping)
-            Ping = " ⚡️ 节点延迟 ➟ 「 "+Ping + " 」 "
-        }
-        const mes1 = {
-            action: "set_policy_state",
-            content: dict
-        }; 
-        $configuration.sendMessage(mes1).then(resolve => {
-            if (resolve.error) {
-                console.log(resolve.error);
-                content =pflag==0 && array[0]? `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">` + "<br><b>⟦ "+policy+ " ⟧ </b><br><br>🎉 该节点支持 <b>YouTube Premium</b>" + `</p>` : `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">` + "<br><b>⟦ "+policy+ " ⟧ </b><br><br>⚠️ 该节点不支持 <b>YouTube Premium</b>" + `</p>`
-                content = pflag!=0 && !array[0]? `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">` + "<br>❌  <b>⟦ "+policy+ " ⟧ </b>⚠️ 切换失败<br><br>该策略组内未找到支持 <b>YouTube Premium</b> 的节点" + "<br><br>-----------------------------<br><b><font color=#FF5733>检测详情请查看JS脚本记录</font></b><br>-----------------------------"+`</p>` : content
-                $done({"title":"YouTube 检测&切换", "htmlMessage": content})
-            }
-            if (resolve.ret) {
-                console.log("已经切换至支持 <b>Premium</b> 的路线 ➟ "+array[0])
-                if (cronsign == "Y") { $notify("📺 YouTube Premium 定时检测&切换", "🎉 已经切换至支持 Premium 的最优延迟线路👇", array[0] +"\n 👉 "+Ping)}
-                content = `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">` + "<br><b>⟦ "+policy+ " ⟧ </b>已切换至支持<b>Premium</b> 的路线中延迟最优节点<br><br> 👇<br><br> ⟦ "+array[0]+ " ⟧" + "<br><br><font color=#16A085>"+Ping+"</font><br>-----------------------------<br><b><font color=#FF5733>检测详情请查看JS脚本记录</font></b><br>-----------------------------"+`</p>`
-                $done({"title":"YouTube 检测&切换", "htmlMessage": content })
-            }
-    }, reject => {
-            $done();
-        });
-        
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+const processReOrderResponse = (response, cnt) => {
+  console.log('resolve');
+  console.log(JSON.stringify(response));
+  
+  const output = JSON.stringify(response);
+  console.log(`节点延迟：${output}`);
+  
+  console.log(`排序前: ${cnt}`);
+  
+  if (cnt) {
+    cnt.sort((a, b) => {
+      console.log(`${a} VS ${b}`);
+      return (response?.[a]?.[1] !== -1 && response?.[b]?.[1] !== -1) 
+        ? response[a][1] - response[b][1] 
+        : response[b][1];
+    });
+  }
+  
+  console.log(`排序后: ${cnt}`);
+  
+  const ping = response[cnt[0]];
+  const dict = { [policy]: cnt[0] };
+  
+  if (cnt[0]) {
+    finalizeReOrder(cnt, ping, dict);
+  }
+};
+
+const finalizeReOrder = async (cnt, ping, dict) => {
+  console.log(`选定支持YouTube Premium：${cnt[0]}延迟数据为 👉${ping}`);
+  const pingStr = ` ⚡️ 节点延迟 ➟ 「 ${ping} 」 `;
+  
+  const mes1 = {
+    action: 'set_policy_state',
+    content: dict
+  };
+  
+  const res = await $configuration.sendMessage(mes1);
+  if (res.error) {
+    handleReOrderError(cnt);
+  } else if (res.ret) {
+    handleReOrderSuccess(cnt, pingStr);
+  }
+};
+
+const handleReOrderError = (cnt) => {
+  const content = pflag === 0 && cnt[0]
+    ? `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin"><br><b>⟦ ${policy} ⟧ </b><br><br>🎉 该节点支持 <b>YouTube Premium</b></p>`
+    : `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin"><br><b>⟦ ${policy} ⟧ </b><br><br>⚠️ 该节点不支持 <b>YouTube Premium</b></p>`;
+  $done({ title: 'YouTube 检测&切换', htmlMessage: content });
+};
+
+const handleReOrderSuccess = (cnt, pingStr) => {
+  console.log(`已经切换至支持 <b>Premium</b> 的路线 ➟ ${cnt[0]}`);
+  if (cronsign === 'Y') {
+    $notify('📺 YouTube Premium 定时检测&切换', '🎉 已经切换至支持 Premium 的最优延迟线路👇', `${cnt[0]}\n 👉 ${pingStr}`);
+  }
+  const content = `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin"><br><b>⟦ ${policy} ⟧ </b>已切换至支持<b>Premium</b> 的路线中延迟最优节点<br><br> 👇<br><br> ⟦ ${cnt[0]} ⟧<br><br><font color=#16A085>${pingStr}</font><br>-----------------------------<br><b><font color=#FF5733>检测详情请查看JS脚本记录</font></b><br>-----------------------------</p>`;
+  $done({ title: 'YouTube 检测&切换', htmlMessage: content });
+};
+
+const testYTB = async (pname) => {
+  const opts = { policy: pname };
+  const option = {
+    url: BASE_URL,
+    opts,
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36',
+      'Accept-Language': 'en',
+    },
+  };
+  
+  try {
+    const response = await $task.fetch(option);
+    const { body: data, statusCode } = response;
+    
+    if (sign === 0) {
+      processTestResponse(pname, data, statusCode);
+    } else {
+      throw new Error('Error');
     }
-    //$done();
-}, reject => {
-    // Normally will never happen.
-    $done();
-});
-}
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 
+const processTestResponse = (pname, data, statusCode) => {
+  if (statusCode !== 200) {
+    console.log(`${pname}：检测出错`);
+    ErrorList.push(pname);
+    throw new Error('Error');
+  }
+  
+  if (data.includes('Premium is not available in your country')) {
+    console.log(`${pname}：未支持`);
+    NoList.push(pname);
+    return 'Not Available';
+  }
+  
+  const re = /"GL":"(.*?)"/gm;
+  const result = re.exec(data);
+  const region = result && result[1] ? result[1] : data.includes('www.google.cn') ? 'CN' : 'US';
+  
+  console.log(`${pname}：支持${region}`);
+  OKList.push(pname);
+  return region;
+};
 
-function testYTB(pname) {
-    return new Promise((resolve, reject) => {
-        let opts = { policy : pname }
-        let option = {
-            url: BASE_URL,
-            opts: opts,
-            headers: {
-                'User-Agent':
-                'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36',
-                'Accept-Language': 'en',
-            },
-        }
-        $task.fetch(option).then(response=> {
-            let data = response.body
-            //console.log(response.statusCode)
-            if (sign==0) {
-            if (response.statusCode !== 200) {
-                console.log(pname+"：检测出错")
-                ErrorList.push(pname)
-                reject('Error')
-                return
-            }
-            
-            if (data.indexOf('Premium is not available in your country') !== -1) {
-                console.log(pname+"：未支持")
-                NoList.push(pname)
-                resolve('Not Available')
-                return
-            }
-            
-            let region = ''
-            let re = new RegExp('"GL":"(.*?)"', 'gm')
-            let result = re.exec(data)
-            if (result != null && result.length === 2) {
-                region = result[1]
-            } else if (data.indexOf('www.google.cn') !== -1) {
-                region = 'CN'
-            } else {
-                region = 'US'
-            }
-            console.log(pname+"：支持"+region)
-            OKList.push(pname)
-            resolve(region)
-        }
-        reject('Error')
-        })
-    })
-}
-
-
-function lookupChildrenNode(policies = {}, targetPolicyName) {
-    let targetPolicy = policies[targetPolicyName]
-    if (!isValidPolicy(targetPolicy)) {
-        throw '策略组名未填写或填写有误，请在 BoxJS 中填写正确的策略组名称'
-    }
-    if (targetPolicy?.type !== 'static') {
-        throw `${targetPolicyName} 不是 static 类型的策略组`
-    }
-    if (targetPolicy.candidates.length <= 0) {
-        throw `${targetPolicyName} 策略组为空`
-    }
-    let candidates = new Set()
-
-    let looked = new Set()
-    let looking = [targetPolicyName]
-
-    while (looking.length > 0) {
-        let curPolicyGroupName = looking.shift()
-        looked.add(curPolicyGroupName)
-        for (const policy of policies[curPolicyGroupName].candidates) {
-            // 排除 proxy 和 reject 两个特殊策略
-            if (policy === 'proxy' || policy === 'reject') {
-                continue
-            }
-            // 如果不是自定义策略，那么就应该是一个节点
-            if (policies[policy] === undefined) {
-                candidates.add(policy)
-                continue
-            }
-
-            // 没有遍历过的策略，也不是即将遍历的策略，并且是 static 类型的策略
-            if (!looked.has(policy) && !looking.includes(policy) && policies[policy]?.type === 'static') {
-                looking.push(policy)
-            }
-        }
-    }
-
-    return [...candidates]
-}
-
+main();
