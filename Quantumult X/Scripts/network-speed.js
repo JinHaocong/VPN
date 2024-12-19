@@ -27,11 +27,26 @@ let content = ''
     const speed = mb / duration
     title = `网络速率`
     content = `</br><h3 style="font-size: 14px;">🚀 网络速率测试结果 🚀</h3></br>` +
-  `<div style="margin-bottom: 1px;"><div style="display: inline-block; font-weight: bold; margin-right: 5px; width: 35%;">📊 下载速度：</div><div style="display: inline-block; width: 60%;">${round(speed * 8, 2)} Mbps</div></div>` +
-  `<div style="margin-bottom: 1px;"><div style="display: inline-block; font-weight: bold; margin-right: 5px; width: 35%;">💾 下载速率：</div><div style="display: inline-block; width: 60%;">${round(speed, 2)} MB/s</div></div>` +
-  `<div style="margin-bottom: 1px;"><div style="display: inline-block; font-weight: bold; margin-right: 5px; width: 35%;">📦 下载大小：</div><div style="display: inline-block; width: 60%;">${mb} MB</div></div>` +
-  `<div style="margin-bottom: 1px;"><div style="display: inline-block; font-weight: bold; margin-right: 5px; width: 35%;">⏱️ 耗时：</div><div style="display: inline-block; width: 60%;">${round(duration, 2)} 秒</div></div>` +
-  `<div style="margin-bottom: 1px;"><div style="display: inline-block; font-weight: bold; margin-right: 5px; width: 35%;">🕒 执行时间：</div><div style="display: inline-block; width: 60%;">${new Date().toTimeString().split(' ')[0]}</div></div>`
+  `<div style="display: grid; grid-template-columns: 35% 60%; gap: 10px; margin-bottom: 1px;">
+     <div style="font-weight: bold;">📊 下载速度：</div>
+     <div>${round(speed * 8, 2)} Mbps</div>
+  </div>` +
+  `<div style="display: grid; grid-template-columns: 35% 60%; gap: 10px; margin-bottom: 1px;">
+     <div style="font-weight: bold;">💾 下载速率：</div>
+     <div>${round(speed, 2)} MB/s</div>
+  </div>` +
+  `<div style="display: grid; grid-template-columns: 35% 60%; gap: 10px; margin-bottom: 1px;">
+     <div style="font-weight: bold;">📦 下载大小：</div>
+     <div>${mb} MB</div>
+  </div>` +
+  `<div style="display: grid; grid-template-columns: 35% 60%; gap: 10px; margin-bottom: 1px;">
+     <div style="font-weight: bold;">⏱️ 耗时：</div>
+     <div>${round(duration, 2)} 秒</div>
+  </div>` +
+  `<div style="display: grid; grid-template-columns: 35% 60%; gap: 10px; margin-bottom: 1px;">
+     <div style="font-weight: bold;">🕒 执行时间：</div>
+     <div>${new Date().toTimeString().split(' ')[0]}</div>
+  </div>`;
     if ($.isTile()) {
         await notify('网络速率', '面板', '查询完成')
     } else if (!$.isPanel()) {
