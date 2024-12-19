@@ -42,14 +42,14 @@ let content = ''
         await notify('网络速率', title, content)
     })
     .finally(async () => {
-        const result = {title, content, ...arg}
+        const result = {title, content, ...arg, htmlMessage: content}
         $.log($.toStr(result))
         $.done(result)
     })
 
 // 通知
 async function notify(title, subt, desc, opts) {
-    const notify = $.lodash_get(arg, 'notify') !== undefined ? $.lodash_get(arg, 'notify') : true;
+    const notify = $.lodash_get(arg, 'notify')
     if (notify) {
         $.msg(title, subt, desc, opts);
     } else {
@@ -386,7 +386,6 @@ function Env(t, s) {
             const s = (new Date).getTime(), e = (s - this.startTime) / 1e3;
             this.log("", `\ud83d\udd14${this.name}, \u7ed3\u675f! \ud83d\udd5b ${e} \u79d2`)
             this.log()
-            console.log(`t:${JSON.stringify(t)}`)
             this.isSurge() || this.isShadowrocket() || this.isQuanX() || this.isLoon() || this.isStash() ? $done(t) : this.isNode() && process.exit(1)
         }
     }(t, s)
