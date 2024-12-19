@@ -27,26 +27,36 @@ let content = ''
     const speed = mb / duration
     title = `网络速率`
     content = `</br><h3 style="font-size: 14px;">🚀 网络速率测试结果 🚀</h3></br>` +
-  `<div style="display: grid; grid-template-columns: 35% 60%; gap: 10px; margin-bottom: 1px;">
-     <div style="font-weight: bold;">📊 下载速度：</div>
-     <div>${round(speed * 8, 2)} Mbps</div>
-  </div>` +
-  `<div style="display: grid; grid-template-columns: 35% 60%; gap: 10px; margin-bottom: 1px;">
-     <div style="font-weight: bold;">💾 下载速率：</div>
-     <div>${round(speed, 2)} MB/s</div>
-  </div>` +
-  `<div style="display: grid; grid-template-columns: 35% 60%; gap: 10px; margin-bottom: 1px;">
-     <div style="font-weight: bold;">📦 下载大小：</div>
-     <div>${mb} MB</div>
-  </div>` +
-  `<div style="display: grid; grid-template-columns: 35% 60%; gap: 10px; margin-bottom: 1px;">
-     <div style="font-weight: bold;">⏱️ 耗时：</div>
-     <div>${round(duration, 2)} 秒</div>
-  </div>` +
-  `<div style="display: grid; grid-template-columns: 35% 60%; gap: 10px; margin-bottom: 1px;">
-     <div style="font-weight: bold;">🕒 执行时间：</div>
-     <div>${new Date().toTimeString().split(' ')[0]}</div>
-  </div>`;
+  `<table style="width: 100%; border-spacing: 0 10px;">
+     <tr>
+       <td style="font-weight: bold; width: 35%;">📊 下载速度：</td>
+       <td style="width: 60%;">${round(speed * 8, 2)} Mbps</td>
+     </tr>
+  </table>` +
+  `<table style="width: 100%; border-spacing: 0 10px;">
+     <tr>
+       <td style="font-weight: bold; width: 35%;">💾 下载速率：</td>
+       <td style="width: 60%;">${round(speed, 2)} MB/s</td>
+     </tr>
+  </table>` +
+  `<table style="width: 100%; border-spacing: 0 10px;">
+     <tr>
+       <td style="font-weight: bold; width: 35%;">📦 下载大小：</td>
+       <td style="width: 60%;">${mb} MB</td>
+     </tr>
+  </table>` +
+  `<table style="width: 100%; border-spacing: 0 10px;">
+     <tr>
+       <td style="font-weight: bold; width: 35%;">⏱️ 耗时：</td>
+       <td style="width: 60%;">${round(duration, 2)} 秒</td>
+     </tr>
+  </table>` +
+  `<table style="width: 100%; border-spacing: 0 10px;">
+     <tr>
+       <td style="font-weight: bold; width: 35%;">🕒 执行时间：</td>
+       <td style="width: 60%;">${new Date().toTimeString().split(' ')[0]}</td>
+     </tr>
+  </table>`;
     if ($.isTile()) {
         await notify('网络速率', '面板', '查询完成')
     } else if (!$.isPanel()) {
