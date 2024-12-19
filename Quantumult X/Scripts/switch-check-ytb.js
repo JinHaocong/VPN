@@ -9,7 +9,7 @@ console.log(`策略组：${policy}`);
 
 const getPolicy = (cnt) => cnt?.includes('#policy=') ? decodeURIComponent(cnt.split('#policy=')[1].trim()) : '';
 
-const message = { action: 'get_customized_policy' };
+const message = { action: 'get_customized_policy', content: policy };
 
 let output = [];
 let OKList = [];
