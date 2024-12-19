@@ -91,8 +91,12 @@ let concurrency = parseInt($.getval('Helge_0x00.Netflix_Concurrency')) || 10
 
     let { policy: newPolicy, region: newRegion, status: newStatus } = cacheFullPolicies.length > 0 ? cacheFullPolicies[0] : cacheOriginalPolicies[0]
 
+    console.log('paths')
+    console.log(JSON.stringify(paths))
     // 找到切换路径，并按照路径长度排序，取路径长度最短的
     let switchPath = paths.filter(path => path[path.length - 1] === newPolicy).sort((m, n) => m.length - n.length)[0]
+    console.log('switchPath')
+    console.log(JSON.stringify(switchPath))
     let switchDict = {}
     for (let i = 0; i < switchPath.length - 1; i++) {
         switchDict[switchPath[i]] = switchPath[i + 1]
