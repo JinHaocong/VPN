@@ -59,8 +59,8 @@ const generateSuccessContent = (info) => {
 
     const formatSection = (title, data, infoData) => {
         if (isEmptyObject(infoData)) return '';
-        return `<h3 style="font-size: 14px;">${title}</h3></br>${Object.entries(data)
-            .map(([key, value]) => `<b>${key}</b>: ${value || ' - '}`)
+        return `</br><h3 style="font-size: 14px;">${title}</h3>${Object.entries(data)
+            .map(([key, value]) => `<div style="display: flex;margin-bottom: 4px"><div style="font-weight: bold">${key}：</><div>${value || ' - '}</div></div>`)
             .join('</br>')}`;
     };
 

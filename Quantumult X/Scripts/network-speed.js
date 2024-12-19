@@ -26,12 +26,12 @@ let content = ''
     const duration = (end - time || start) / 1000
     const speed = mb / duration
     title = `网络速率`
-    content = `<h3 style="font-size: 14px;">🚀 网络速率测试结果 🚀</h3></br>` +
-        `<b>📊 下载速度:</b> ${round(speed * 8, 2)} Mbps</br>` +
-        `<b>💾 下载速率:</b> ${round(speed, 2)} MB/s</br>` +
-        `<b>📦 下载大小:</b> ${mb} MB</br>` +
-        `<b>⏱️ 耗时:</b> ${round(duration, 2)} 秒</br>` +
-        `<b>🕒 执行时间:</b> ${new Date().toTimeString().split(' ')[0]}</br>`
+    content = `</br><h3 style="font-size: 14px;">🚀 网络速率测试结果 🚀</h3></br>` +
+        `<div style="display: flex; margin-bottom: 4px;"><div style="font-weight: bold; margin-right: 5px;">📊 下载速度：</div><div>${round(speed * 8, 2)} Mbps</div></div>` +
+        `<div style="display: flex; margin-bottom: 4px;"><div style="font-weight: bold; margin-right: 5px;">💾 下载速率：</div><div>${round(speed, 2)} MB/s</div></div>` +
+        `<div style="display: flex; margin-bottom: 4px;"><div style="font-weight: bold; margin-right: 5px;">📦 下载大小：</div><div>${mb} MB</div></div>` +
+        `<div style="display: flex; margin-bottom: 4px;"><div style="font-weight: bold; margin-right: 5px;">⏱️ 耗时：</div><div>${round(duration, 2)} 秒</div></div>` +
+        `<div style="display: flex; margin-bottom: 4px;"><div style="font-weight: bold; margin-right: 5px;">🕒 执行时间：</div><div>${new Date().toTimeString().split(' ')[0]}</div></div>`
     if ($.isTile()) {
         await notify('网络速率', '面板', '查询完成')
     } else if (!$.isPanel()) {
