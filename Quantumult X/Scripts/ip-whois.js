@@ -59,7 +59,7 @@ const generateSuccessContent = (info) => {
 
     const formatSection = (title, data, infoData) => {
         if (isEmptyObject(infoData)) return '';
-        return `<h3 style="font-size: 14px;">${title}</h3>${Object.entries(data)
+        return `</br><h3 style="font-size: 14px;">${title}</h3>${Object.entries(data)
   .map(([key, value]) => `
     <div style="margin-bottom: 20px;">
       <div style="display: inline-block; font-weight: bold; width: 30%; vertical-align: top;">${key}：</div>
