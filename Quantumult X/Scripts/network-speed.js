@@ -50,8 +50,8 @@ let content = ''
 
 // 通知
 async function notify(title, subt, desc, opts) {
-    console.log(`$.lodash_get(arg, 'notify')${$.lodash_get(arg, 'notify')}`)
-    const notify = $.lodash_get(arg, 'notify') !== 'undefined' ? $.lodash_get(arg, 'notify') : true;
+    console.log(`$.lodash_get(arg, 'notify')${typeof $.lodash_get(arg, 'notify')}`)
+    const notify = $.lodash_get(arg, 'notify') !== undefined ? $.lodash_get(arg, 'notify') : true;
 
     if (notify) {
         $.msg(title, subt, desc, opts);
