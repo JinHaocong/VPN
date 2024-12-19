@@ -27,11 +27,11 @@ let content = ''
     const speed = mb / duration
     title = `网络速率`
     content = `<h3 style="font-size: 14px;">🚀 网络速率测试结果 🚀</h3></br>` +
-        `<b>📊 下载速度:</b> <span style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">${round(speed * 8, 2)} Mbps</span>` +
-        `<b>💾 下载速率:</b> <span style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">${round(speed, 2)} MB/s</span>` +
-        `<b>📦 下载大小:</b> <span style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">${mb} MB</span>` +
-        `<b>⏱️ 耗时:</b> <span style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">${round(duration, 2)} 秒</span>` +
-        `<b>🕒 执行时间:</b> <span style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">${new Date().toTimeString().split(' ')[0]}</span>`
+        `<b>📊 下载速度:</b> ${round(speed * 8, 2)} Mbps</br>` +
+        `<b>💾 下载速率:</b> ${round(speed, 2)} MB/s</br>` +
+        `<b>📦 下载大小:</b> ${mb} MB</br>` +
+        `<b>⏱️ 耗时:</b> ${round(duration, 2)} 秒</br>` +
+        `<b>🕒 执行时间:</b> ${new Date().toTimeString().split(' ')[0]}</br>`
     if ($.isTile()) {
         await notify('网络速率', '面板', '查询完成')
     } else if (!$.isPanel()) {
