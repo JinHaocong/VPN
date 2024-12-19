@@ -127,7 +127,8 @@ function ReOrder(cnt) {
         console.log(resolve.error);
     }
     if (resolve.ret) {
-        console.log(type of resolve.ret)
+        console.log(111)
+        console.log(typeof resolve.ret)
         resolve.ret.forEach(item => {
             console.log('item')
             console.log(JSON.stringify(item))
