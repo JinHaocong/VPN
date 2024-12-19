@@ -51,63 +51,56 @@ let content = ''
 
 // 生成content
 const generateSuccessContent = (info) => {
-    const securityMap = {
-        true: '✓',
-        false: '✗',
-        '': '-',
-    };
-    const securityObj = $.lodash_get(info, 'security', {});
+    const {security = {}, connection = {}, timezone = {}, currency = {}} = info;
+
+    const securityMap = {true: '✓', false: '✗', '': '-'};
     const securityIcons = {
-        anonymous: '🕵️‍♂️ 匿名',
-        proxy: '🔌 代理',
-        vpn: '🛡️ VPN',
-        tor: '🌐 Tor',
-        hosting: '🏢 托管',
+        anonymous: '🕵️‍♂️ 匿名', proxy: '🔌 代理', vpn: '🛡️ VPN',
+        tor: '🌐 Tor', hosting: '🏢 托管'
     };
-    const security = Object.entries(securityObj)
+
+    const formatSection = (title, data) =>
+        `${title}:<br>${Object.entries(data)
+            .map(([key, value]) => `${key}: ${value || ' - '}`)
+            .join('<br>')}`;
+
+    const geoInfo = formatSection('🌍 地理信息', {
+        '🔢 IP': info.ip,
+        '🔢 IP 类型': info.type,
+        '🌍 国家': info.country,
+        '📍 地区': info.region,
+        '🏙️ 城市': info.city,
+        '🗺️ 大洲': info.continent,
+        '🗺️ 大洲代码': info.continent_code,
+        '🏢 首都': info.capital,
+        '📞 国家代码': info.calling_code,
+        '🏴 国旗': $.lodash_get(info, 'flag.emoji')
+    });
+
+    const ispInfo = formatSection('🏢 连接信息', {
+        '🏢 组织': connection.org,
+        '🔌 ISP': connection.isp,
+        '🌐 域名': connection.domain,
+        '🔢 ASN': connection.asn
+    });
+
+    const timezoneInfo = formatSection('🕒 时区信息', {
+        '🕒 时区': timezone.id,
+        '🕒 时区缩写': timezone.abbr,
+        '🕒 当前时间': timezone.current_time
+    });
+
+    const currencyInfo = formatSection('💰 货币信息', {
+        '💰 货币': currency.name,
+        '💰 货币代码': currency.code,
+        '💰 货币符号': currency.symbol
+    });
+
+    const securityInfo = Object.entries(security)
         .map(([key, value]) => `${securityIcons[key] || key.toUpperCase()}: ${securityMap[value]}`)
         .join('<br>') || '-';
 
-    const geoInfo = [
-        `🌍 地理信息:<br>`,
-        `🔢 IP: ${$.lodash_get(info, 'ip', ' - ')}`,
-        `🔢 IP 类型: ${$.lodash_get(info, 'type', ' - ')}`,
-        `🌍 国家: ${$.lodash_get(info, 'country', ' - ')}`,
-        `📍 地区: ${$.lodash_get(info, 'region', ' - ')}`,
-        `🏙️ 城市: ${$.lodash_get(info, 'city', ' - ')}`,
-        `🗺️ 大洲: ${$.lodash_get(info, 'continent', ' - ')}`,
-        `🗺️ 大洲代码: ${$.lodash_get(info, 'continent_code', ' - ')}`,
-        `🏢 首都: ${$.lodash_get(info, 'capital', ' - ')}`,
-        `📞 国家代码: ${$.lodash_get(info, 'calling_code', ' - ')}`,
-        `🏴 国旗: ${$.lodash_get(info, 'flag.emoji', ' - ')}`
-    ].join('<br>');
-
-    const connection = $.lodash_get(info, 'connection', {});
-    const ispInfo = [
-        `🏢 连接信息:<br>`,
-        `🏢 组织: ${connection.org || ' - '}`,
-        `🔌 ISP: ${connection.isp || ' - '}`,
-        `🌐 域名: ${connection.domain || ' - '}`,
-        `🔢 ASN: ${connection.asn || ' - '}`
-    ].filter(info => info.includes(':')).join('<br>');
-
-    const timezone = $.lodash_get(info, 'timezone', {});
-    const timezoneInfo = [
-        `🕒 时区信息:<br>`,
-        `🕒 时区: ${timezone.id || ' - '}`,
-        `🕒 时区缩写: ${timezone.abbr || ' - '}`,
-        `🕒 当前时间: ${timezone.current_time || ' - '}`
-    ].filter(info => info.includes(':')).join('<br>');
-
-    const currency = $.lodash_get(info, 'currency', {});
-    const currencyInfo = [
-        `💰 货币信息:<br>`,
-        `💰 货币: ${currency.name || ' - '}`,
-        `💰 货币代码: ${currency.code || ' - '}`,
-        `💰 货币符号: ${currency.symbol || ' - '}`
-    ].filter(info => info.includes(':')).join('<br>');
-
-    return `${geoInfo}<br>${ispInfo}<br>${timezoneInfo}<br>${currencyInfo}<br>🔒 安全状态:<br>${security}<br>⏰ 执行时间: ${new Date().toTimeString().split(' ')[0]}`;
+    return `${geoInfo}<br>${ispInfo}<br>${timezoneInfo}<br>${currencyInfo}<br>🔒 安全状态:<br>${securityInfo}<br>⏰ 执行时间: ${new Date().toTimeString().split(' ')[0]}`;
 };
 
 // 通知
