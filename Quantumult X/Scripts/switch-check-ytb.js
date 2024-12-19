@@ -96,6 +96,7 @@ const reOrder = async (cnt) => {
 
   try {
     const resolve = await $configuration.sendMessage(messageURL);
+    console.log(`url_latency_benchmark:${JSON.stringify(resolve)}`)
     if (resolve.error) {
       handleError(resolve.error);
       return;
@@ -110,30 +111,34 @@ const reOrder = async (cnt) => {
 };
 
 const processReOrderResponse = (response, cnt) => {
-  console.log('processReOrderResponse 执行');
-  console.log(JSON.stringify(response));
-  
-  const output = JSON.stringify(response);
-  console.log(`节点延迟：${output}`);
-  
-  console.log(`排序前: ${cnt}`);
-  
-  if (cnt) {
-    cnt.sort((a, b) => {
-      console.log(`${a} VS ${b}`);
-      return (response?.[a]?.[1] !== -1 && response?.[b]?.[1] !== -1) 
-        ? response[a][1] - response[b][1] 
-        : response[b][1];
-    });
-  }
-  
-  console.log(`排序后: ${cnt}`);
-  
-  const ping = response[cnt[0]];
-  const dict = { [policy]: cnt[0] };
-  
-  if (cnt[0]) {
-    finalizeReOrder(cnt, ping, dict);
+  try {
+    console.log('processReOrderResponse 执行');
+    console.log(JSON.stringify(response));
+
+    const output = JSON.stringify(response);
+    console.log(`节点延迟：${output}`);
+
+    console.log(`排序前: ${cnt}`);
+
+    if (cnt) {
+      cnt.sort((a, b) => {
+        console.log(`${a} VS ${b}`);
+        return (response?.[a]?.[1] !== -1 && response?.[b]?.[1] !== -1)
+            ? response[a][1] - response[b][1]
+            : response[b][1];
+      });
+    }
+
+    console.log(`排序后: ${cnt}`);
+
+    const ping = response[cnt[0]];
+    const dict = { [policy]: cnt[0] };
+
+    if (cnt[0]) {
+      finalizeReOrder(cnt, ping, dict);
+    }
+  } catch (e) {
+    handleError(error);
   }
 };
 
