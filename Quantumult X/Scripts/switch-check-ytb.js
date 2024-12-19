@@ -52,6 +52,8 @@ $configuration.sendMessage(message).then(resolve => {
         console.log(resolve.error);
         $done()
     }
+    console.log('resolve')
+    console.log(JSON.stringify(resolve))
     if (resolve.ret) {
         //$notify(JSON.stringify(resolve.ret))
         output=JSON.stringify(resolve.ret[message.content])? JSON.parse(JSON.stringify(resolve.ret[message.content]["candidates"])) : [policy]
