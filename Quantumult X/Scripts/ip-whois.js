@@ -61,9 +61,9 @@ const generateSuccessContent = (info) => {
         if (isEmptyObject(infoData)) return '';
         return `</br><h3 style="font-size: 14px;">${title}</h3>${Object.entries(data)
   .map(([key, value]) => `
-    <div style="padding-bottom: 10px;">
-      <div style="display: block; font-weight: bold; width: 30%;">${key}：</div>
-      <div style="display: block; width: 65%;">${value || ' - '}</div>
+    <div style="display: flex; align-items: baseline; margin-bottom: 10px;">
+      <div style="font-weight: bold; width: 30%;">${key}：</div>
+      <div style="width: 65%;">${value || ' - '}</div>
     </div>`)
   .join('')}`;
     };
