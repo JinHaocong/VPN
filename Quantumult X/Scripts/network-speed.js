@@ -26,12 +26,12 @@ let content = ''
     const duration = (end - time || start) / 1000
     const speed = mb / duration
     title = `网络速率`
-    content = `🚀 网络速率测试结果 🚀\n\n` +
-        `📊 下载速度: ${round(speed * 8, 2)} Mbps\n` +
-        `💾 下载速率: ${round(speed, 2)} MB/s\n` +
-        `📦 下载大小: ${mb} MB\n` +
-        `⏱️ 耗时: ${round(duration, 2)} 秒\n` +
-        `🕒 执行时间: ${new Date().toTimeString().split(' ')[0]}\n`
+    content = `🚀 网络速率测试结果 🚀<br><br>` +
+        `📊 下载速度: ${round(speed * 8, 2)} Mbps<br>` +
+        `💾 下载速率: ${round(speed, 2)} MB/s<br>` +
+        `📦 下载大小: ${mb} MB<br>` +
+        `⏱️ 耗时: ${round(duration, 2)} 秒<br>` +
+        `🕒 执行时间: ${new Date().toTimeString().split(' ')[0]}<br>`
     if ($.isTile()) {
         await notify('网络速率', '面板', '查询完成')
     } else if (!$.isPanel()) {

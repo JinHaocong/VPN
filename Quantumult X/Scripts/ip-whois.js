@@ -66,10 +66,10 @@ const generateSuccessContent = (info) => {
     };
     const security = Object.entries(securityObj)
         .map(([key, value]) => `${securityIcons[key] || key.toUpperCase()}: ${securityMap[value]}`)
-        .join('\n') || '-';
+        .join('<br>') || '-';
 
     const geoInfo = [
-        `🌍 地理信息:`,
+        `🌍 地理信息:<br>`,
         `🔢 IP: ${$.lodash_get(info, 'ip', ' - ')}`,
         `🔢 IP 类型: ${$.lodash_get(info, 'type', ' - ')}`,
         `🌍 国家: ${$.lodash_get(info, 'country', ' - ')}`,
@@ -80,34 +80,34 @@ const generateSuccessContent = (info) => {
         `🏢 首都: ${$.lodash_get(info, 'capital', ' - ')}`,
         `📞 国家代码: ${$.lodash_get(info, 'calling_code', ' - ')}`,
         `🏴 国旗: ${$.lodash_get(info, 'flag.emoji', ' - ')}`
-    ].join('\n');
+    ].join('<br>');
 
     const connection = $.lodash_get(info, 'connection', {});
     const ispInfo = [
-        `🏢 连接信息:`,
+        `🏢 连接信息:<br>`,
         `🏢 组织: ${connection.org || ' - '}`,
         `🔌 ISP: ${connection.isp || ' - '}`,
         `🌐 域名: ${connection.domain || ' - '}`,
         `🔢 ASN: ${connection.asn || ' - '}`
-    ].filter(info => info.includes(':')).join('\n');
+    ].filter(info => info.includes(':')).join('<br>');
 
     const timezone = $.lodash_get(info, 'timezone', {});
     const timezoneInfo = [
-        `🕒 时区信息:`,
+        `🕒 时区信息:<br>`,
         `🕒 时区: ${timezone.id || ' - '}`,
         `🕒 时区缩写: ${timezone.abbr || ' - '}`,
         `🕒 当前时间: ${timezone.current_time || ' - '}`
-    ].filter(info => info.includes(':')).join('\n');
+    ].filter(info => info.includes(':')).join('<br>');
 
     const currency = $.lodash_get(info, 'currency', {});
     const currencyInfo = [
-        `💰 货币信息:`,
+        `💰 货币信息:<br>`,
         `💰 货币: ${currency.name || ' - '}`,
         `💰 货币代码: ${currency.code || ' - '}`,
         `💰 货币符号: ${currency.symbol || ' - '}`
-    ].filter(info => info.includes(':')).join('\n');
+    ].filter(info => info.includes(':')).join('<br>');
 
-    return `${geoInfo}\n${ispInfo}\n${timezoneInfo}\n${currencyInfo}\n🔒 安全状态:\n${security}\n⏰ 执行时间: ${new Date().toTimeString().split(' ')[0]}`;
+    return `${geoInfo}<br>${ispInfo}<br>${timezoneInfo}<br>${currencyInfo}<br>🔒 安全状态:<br>${security}<br>⏰ 执行时间: ${new Date().toTimeString().split(' ')[0]}`;
 };
 
 // 通知
