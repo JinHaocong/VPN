@@ -60,7 +60,7 @@ const generateSuccessContent = (info) => {
     const formatSection = (title, data, infoData) => {
         if (isEmptyObject(infoData)) return '';
         return `<h3 style="font-size: 14px;">${title}</h3></br>${Object.entries(data)
-            .map(([key, value]) => `<b>${key}</b>: <p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">${value || ' - '}</p>`)
+            .map(([key, value]) => `<b>${key}</b>: <span style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">${value || ' - '}</span>`)
             .join('')}`;
     };
 
