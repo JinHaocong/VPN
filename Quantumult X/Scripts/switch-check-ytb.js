@@ -127,7 +127,11 @@ function ReOrder(cnt) {
         console.log(resolve.error);
     }
     if (resolve.ret) {
-        console.log(resolve.ret)
+        console.log(type of resolve.ret)
+        resolve.ret.forEach(item => {
+            console.log('item')
+            console.log(JSON.stringify(item))
+        })
         console.log(333)
         let output=JSON.stringify(resolve.ret);
         console.log("节点延迟："+ output);
