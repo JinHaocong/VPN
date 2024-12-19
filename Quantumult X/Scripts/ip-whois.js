@@ -69,6 +69,7 @@ const generateSuccessContent = (info) => {
         .join('\n') || '-';
 
     const geoInfo = [
+        `🌍 地理信息:`,
         `🔢 IP: ${$.lodash_get(info, 'ip', ' - ')}`,
         `🔢 IP 类型: ${$.lodash_get(info, 'type', ' - ')}`,
         `🌍 国家: ${$.lodash_get(info, 'country', ' - ')}`,
@@ -83,6 +84,7 @@ const generateSuccessContent = (info) => {
 
     const connection = $.lodash_get(info, 'connection', {});
     const ispInfo = [
+        `🏢 连接信息:`,
         `🏢 组织: ${connection.org || ' - '}`,
         `🔌 ISP: ${connection.isp || ' - '}`,
         `🌐 域名: ${connection.domain || ' - '}`,
@@ -91,6 +93,7 @@ const generateSuccessContent = (info) => {
 
     const timezone = $.lodash_get(info, 'timezone', {});
     const timezoneInfo = [
+        `🕒 时区信息:`,
         `🕒 时区: ${timezone.id || ' - '}`,
         `🕒 时区缩写: ${timezone.abbr || ' - '}`,
         `🕒 当前时间: ${timezone.current_time || ' - '}`
@@ -98,6 +101,7 @@ const generateSuccessContent = (info) => {
 
     const currency = $.lodash_get(info, 'currency', {});
     const currencyInfo = [
+        `💰 货币信息:`,
         `💰 货币: ${currency.name || ' - '}`,
         `💰 货币代码: ${currency.code || ' - '}`,
         `💰 货币符号: ${currency.symbol || ' - '}`
