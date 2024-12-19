@@ -122,6 +122,8 @@ function ReOrder(cnt) {
     action: "url_latency_benchmark",
     content: array
 };
+    console.log('messageURL')
+    console.log(JSON.stringify(messageURL))
     $configuration.sendMessage(messageURL).then(resolve => {
     if (resolve.error) {
         console.log(resolve.error);
