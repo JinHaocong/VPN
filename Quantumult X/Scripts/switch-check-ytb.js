@@ -127,13 +127,8 @@ function ReOrder(cnt) {
         console.log(resolve.error);
     }
     if (resolve.ret) {
-        console.log(111)
-        console.log(typeof resolve.ret)
-        resolve.ret.forEach(item => {
-            console.log('item')
-            console.log(JSON.stringify(item))
-        })
-        console.log(333)
+        console.log('resolve')
+        console.log(JSON.stringify(resolve))
         let output=JSON.stringify(resolve.ret);
         console.log("节点延迟："+ output);
         //排序
@@ -141,8 +136,8 @@ function ReOrder(cnt) {
         if(array){
             try {
         array.sort(function (a,b) {
-            //console.log(a+" VS "+b)
-        return (resolve.ret[a][1]!=-1 && resolve.ret[b][1] !=-1)? resolve.ret[a][1]-resolve.ret[b][1] : resolve.ret[b][1]
+            console.log(a+" VS "+b)
+        return (resolve.ret?.[a]?.[1]!=-1 && resolve.ret?.[b]?.[1] !=-1)? resolve.ret[a][1]-resolve.ret[b][1] : resolve.ret[b][1]
     })
     } catch (err) {
         console.log(err)
