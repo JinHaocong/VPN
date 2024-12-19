@@ -60,8 +60,12 @@ const generateSuccessContent = (info) => {
     const formatSection = (title, data, infoData) => {
         if (isEmptyObject(infoData)) return '';
         return `</br><h3 style="font-size: 14px;">${title}</h3>${Object.entries(data)
-            .map(([key, value]) => `<div style="display: flex;margin-bottom: 1px"><div style="font-weight: bold">${key}：</div><div>${value || ' - '}</div></div>`)
-            .join('</br>')}`;
+  .map(([key, value]) => `
+    <div style="margin-bottom: 1px;">
+      <div style="display: inline-block; font-weight: bold; width: 30%; vertical-align: top;">${key}：</div>
+      <div style="display: inline-block; width: 65%; vertical-align: top;">${value || ' - '}</div>
+    </div>`)
+  .join('</br>')}`;
     };
 
     const geoInfo = formatSection('🌍 地理信息', {
