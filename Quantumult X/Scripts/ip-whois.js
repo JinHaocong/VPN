@@ -61,7 +61,7 @@ const generateSuccessContent = (info) => {
         if (isEmptyObject(data)) return '';
         return `<h3 style="font-size: 18px; margin-bottom: 10px;">${title}</h3><br>${Object.entries(data)
             .map(([key, value]) => `<b>${key}</b>: <p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">${value || ' - '}</p>`)
-            .join('<br><br>')}`;
+            .join('<br>')}`;
     };
 
     const geoInfo = formatSection('🌍 地理信息', {
