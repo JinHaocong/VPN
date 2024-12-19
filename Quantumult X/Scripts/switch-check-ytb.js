@@ -55,6 +55,11 @@ $configuration.sendMessage(message).then(resolve => {
     if (resolve.ret) {
         //$notify(JSON.stringify(resolve.ret))
         output=JSON.stringify(resolve.ret[message.content])? JSON.parse(JSON.stringify(resolve.ret[message.content]["candidates"])) : [policy]
+        let candidatePolicies = lookupChildrenNode(resolve.ret, policy)
+        console.log('candidatePolicies')
+        console.log(JSON.stringify(candidatePolicies))
+        console.log('output')
+        console.log(JSON.stringify(output))
         pflag = JSON.stringify(resolve.ret[message.content])? pflag:0
         console.log("YouTube Premium 检测")
         console.log("节点or策略组："+pflag)
@@ -231,4 +236,44 @@ function testYTB(pname) {
     })
 }
 
+
+function lookupChildrenNode(policies = {}, targetPolicyName) {
+    let targetPolicy = policies[targetPolicyName]
+    if (!isValidPolicy(targetPolicy)) {
+        throw '策略组名未填写或填写有误，请在 BoxJS 中填写正确的策略组名称'
+    }
+    if (targetPolicy?.type !== 'static') {
+        throw `${targetPolicyName} 不是 static 类型的策略组`
+    }
+    if (targetPolicy.candidates.length <= 0) {
+        throw `${targetPolicyName} 策略组为空`
+    }
+    let candidates = new Set()
+
+    let looked = new Set()
+    let looking = [targetPolicyName]
+
+    while (looking.length > 0) {
+        let curPolicyGroupName = looking.shift()
+        looked.add(curPolicyGroupName)
+        for (const policy of policies[curPolicyGroupName].candidates) {
+            // 排除 proxy 和 reject 两个特殊策略
+            if (policy === 'proxy' || policy === 'reject') {
+                continue
+            }
+            // 如果不是自定义策略，那么就应该是一个节点
+            if (policies[policy] === undefined) {
+                candidates.add(policy)
+                continue
+            }
+
+            // 没有遍历过的策略，也不是即将遍历的策略，并且是 static 类型的策略
+            if (!looked.has(policy) && !looking.includes(policy) && policies[policy]?.type === 'static') {
+                looking.push(policy)
+            }
+        }
+    }
+
+    return [...candidates]
+}
 
