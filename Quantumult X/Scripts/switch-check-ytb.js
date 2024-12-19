@@ -1,13 +1,11 @@
 const BASE_URL = 'https://www.youtube.com/premium';
 const { executeType, sourcePath, params } = $environment;
-
+const getPolicy = (cnt) => cnt?.includes('#policy=') ? decodeURIComponent(cnt.split('#policy=')[1].trim()) : '';
 const cronsign = ['0', '-1'].includes(executeType) ? 'Y' : 'N';
 const policy = ['0', '-1'].includes(executeType) ? getPolicy(sourcePath) : params;
 
 console.log(`$environment：${JSON.stringify($environment)}`);
 console.log(`策略组：${policy}`);
-
-const getPolicy = (cnt) => cnt?.includes('#policy=') ? decodeURIComponent(cnt.split('#policy=')[1].trim()) : '';
 
 const message = { action: 'get_customized_policy', content: policy };
 
