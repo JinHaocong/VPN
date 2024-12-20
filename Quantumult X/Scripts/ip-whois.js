@@ -59,9 +59,9 @@ const generateSuccessContent = (info) => {
 
     const formatSection = (title, data, infoData) => {
         if (isEmptyObject(infoData)) return '';
-        return `</br><h3 style="font-size: 14px;">${title}</h3>${Object.entries(data)
+        return `</br><h3 style="font-size: 16px;">${title}</h3>${Object.entries(data)
             .map(([key, value]) => ` 
-    <table style="width: 100%; border-spacing: 0 15px;font-size: 13px"">
+    <table style="width: 100%; border-spacing: 0 15px;font-size: 14px"">
       <tr>
         <td style="font-weight: bold; width: 30%;">${key}：</td>
         <td style="width: 65%;">${value || ' - '}</td>
