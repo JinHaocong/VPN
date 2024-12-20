@@ -27,7 +27,7 @@ let content = ''
     const speed = mb / duration
     title = `网络速率`
     content = `</br><h3 style="font-size: 14px;">🚀 网络速率测试结果 🚀</h3></br>` +
-        `<table style="width: 100%; border-spacing: 0 10px;">
+        `<table style="width: 100%; border-spacing: 0 20px;font-size: 18px">
      <tr>
        <td style="font-weight: bold; width: 35%;">📊 下载速度：</td>
        <td style="width: 60%;">${round(speed * 8, 2)} Mbps</td>
