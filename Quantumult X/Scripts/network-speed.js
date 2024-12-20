@@ -27,32 +27,32 @@ let content = ''
     const speed = mb / duration
     title = `网络速率`
     content = `</br><h3 style="font-size: 14px;">🚀 网络速率测试结果 🚀</h3></br>` +
-        `<table style="width: 100%; border-spacing: 0 20px;font-size: 18px">
-     <tr>
+        `<table style="width: 100%; border-spacing: 0 20px;font-size: 15px">
+     <tr style="font-size: 14px">
        <td style="font-weight: bold; width: 35%;">📊 下载速度：</td>
        <td style="width: 60%;">${round(speed * 8, 2)} Mbps</td>
      </tr>
   </table>` +
         `<table style="width: 100%; border-spacing: 0 10px;">
-     <tr>
+     <tr style="font-size: 14px">
        <td style="font-weight: bold; width: 35%;">💾 下载速率：</td>
        <td style="width: 60%;">${round(speed, 2)} MB/s</td>
      </tr>
   </table>` +
         `<table style="width: 100%; border-spacing: 0 10px;">
-     <tr>
+     <tr style="font-size: 14px">
        <td style="font-weight: bold; width: 35%;">📦 下载大小：</td>
        <td style="width: 60%;">${mb} MB</td>
      </tr>
   </table>` +
         `<table style="width: 100%; border-spacing: 0 10px;">
-     <tr>
+     <tr style="font-size: 14px">
        <td style="font-weight: bold; width: 35%;">⏱️ 耗时：</td>
        <td style="width: 60%;">${round(duration, 2)} 秒</td>
      </tr>
   </table>` +
         `<table style="width: 100%; border-spacing: 0 10px;">
-     <tr>
+     <tr style="font-size: 14px">
        <td style="font-weight: bold; width: 35%;">🕒 执行时间：</td>
        <td style="width: 60%;">${new Date().toTimeString().split(' ')[0]}</td>
      </tr>
