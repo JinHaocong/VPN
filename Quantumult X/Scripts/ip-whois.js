@@ -60,14 +60,14 @@ const generateSuccessContent = (info) => {
     const formatSection = (title, data, infoData) => {
         if (isEmptyObject(infoData)) return '';
         return `</br><h3 style="font-size: 14px;">${title}</h3>${Object.entries(data)
-  .map(([key, value]) => `
+            .map(([key, value]) => ` 
     <table style="width: 100%; border-spacing: 0 10px;">
       <tr>
         <td style="font-weight: bold; width: 30%;">${key}：</td>
         <td style="width: 65%;">${value || ' - '}</td>
       </tr>
     </table>`)
-  .join('')}`;
+            .join('')}`;
     };
 
     const geoInfo = formatSection('🌍 地理信息', {
