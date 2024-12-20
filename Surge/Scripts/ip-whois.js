@@ -25,6 +25,7 @@ let content = ''
     // }
     // const { PROXY_IP } = await getProxyInfo()
     let info = await getInfo()
+    console.log(JSON.stringify(info))
     $.log($.toStr(info))
     const ip = $.lodash_get(info, 'ip') || ' - '
     title = `${ip}`
@@ -84,7 +85,7 @@ async function notify(title, subt, desc, opts) {
     }
 }
 
-async function getInfo(ip) {
+async function getInfo() {
     let info = {}
 
     try {
