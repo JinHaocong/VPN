@@ -89,23 +89,9 @@ async function getInfo(ip) {
 
     try {
         const res = await $.http.get({
-            url: `https://ipwhois.app/widget.php`,
+            url: `https://ipwho.is`,
             params: {
-                ip,
                 lang: 'zh-CN',
-            },
-            headers: {
-                Host: 'ipwhois.app',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',
-                Accept: '*/*',
-                'Accept-Language': 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
-                'Accept-Encoding': 'gzip, deflate, br',
-                Origin: 'https://ipwhois.io',
-                Connection: 'keep-alive',
-                Referer: 'https://ipwhois.io/',
-                'Sec-Fetch-Dest': 'empty',
-                'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Site': 'cross-site',
             },
         })
         let body = String($.lodash_get(res, 'body'))
