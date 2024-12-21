@@ -67,11 +67,12 @@ let args = getArgs();
 })();
 
 function getArgs() {
+    console.log(JSON.stringify($argument))
     return Object.fromEntries(
         $argument
             .split("&")
             .map((item) => item.split("="))
-            .map(([k, v]) => [k, k === 'url' ? v : decodeURIComponent(v)])
+            .map(([k, v]) => [k, decodeURIComponent(v)])
     );
 }
 
