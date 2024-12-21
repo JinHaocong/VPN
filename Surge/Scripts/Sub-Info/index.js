@@ -77,9 +77,10 @@ function getArgs() {
 
 function getUserInfo(url) {
     let method = args.method || "head";
-    let request = {headers: {"User-Agent": "Quantumult%20X"}, url};
+    let request = {headers: {"User-Agent": "Surge"}, url};
     return new Promise((resolve, reject) =>
         $httpClient[method](request, (err, resp) => {
+            console.log(JSON.stringify(resp))
             if (err != null) {
                 reject(err);
                 return;
