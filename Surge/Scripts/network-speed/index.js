@@ -33,7 +33,7 @@ let content = ''
     minutes = minutes > 9 ? minutes : "0" + minutes;
 
     title = `流媒体解锁检测 | ${hour}:${minutes}`
-    content = `${round(speed * 8, 2)} Mbps\n${round(speed, 2)} MB/s\n耗时: ${round(duration, 2)}s\n执行时间: ${new Date().toTimeString().split(' ')[0]}`
+    content = `${round(speed * 8, 2)} Mbps\n${round(speed, 2)} MB/s\n耗时: ${round(duration, 2)}s`
     if ($.isTile()) {
         await notify('网络速率', '面板', '查询完成')
     } else if (!$.isPanel()) {
