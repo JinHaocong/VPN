@@ -463,8 +463,9 @@ function getNetworkInfo(retryTimes = 5, retryInterval = 1000) {
             'icon-color': getSSID() ? '#5A9AF9' : '#8AB8DD',
         });
 
-        if (args.notify === '1') {
-            $notification.post('网络信息变化', getSSID() ?? getCellularInfo(), content)
+        console.log(`args.notify${args.notify}`)
+        if (args.notify == 1) {
+            $notification.post(getSSID() ?? getCellularInfo(), content)
         }
     }).catch(error => {
         // 网络切换
