@@ -58,6 +58,14 @@ const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (
             console.log(content)
 
             panel_result['content'] = content
+
+            let now = new Date();
+            let hour = now.getHours();
+            let minutes = now.getMinutes();
+            hour = hour > 9 ? hour : "0" + hour;
+            minutes = minutes > 9 ? minutes : "0" + minutes;
+
+            panel_result['title'] = `流媒体解锁检测 | ${hour}:${minutes}`
         })
         .finally(() => {
             $done(panel_result)
