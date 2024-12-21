@@ -16,9 +16,9 @@ Sub_info = script-name=Sub_info,update-interval=600
 
 ----------------------------------------
 
-先将带有流量信息的节点订阅链接encode，用encode后的链接替换"url="后面的[机场节点链接]
+（实在不会可以用这个捷径生成panel和脚本，https://www.icloud.com/shortcuts/3f24df391d594a73abd04ebdccd92584）*
 
-（实在不会可以用这个捷径生成panel和脚本，https://www.icloud.com/shortcuts/3f24df391d594a73abd04ebdccd92584）
+必填参数"url=xxx"机场链接（无需编码，原链接即可）。
 
 可选参数 &reset_day，后面的数字替换成流量每月重置的日期，如1号就写1，8号就写8。如"&reset_day=8",不加该参数不显示流量重置信息。
 
@@ -75,7 +75,7 @@ function getArgs() {
             args[key] = item.slice(idx + 1)
         }
     });
-    
+
     return args;
 }
 
