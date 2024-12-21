@@ -16,6 +16,16 @@
     if ($trigger == "button") await httpAPI("/v1/dns/flush");
     let delay = ((await httpAPI("/v1/test/dns_delay")).delay * 1000).toFixed(0);
     panel.content = `DNS延迟: ${delay}ms${dnsCache ? `\nserver:\n${dnsCache}` : ""}`;
+
+
+    let now = new Date();
+    let hour = now.getHours();
+    let minutes = now.getMinutes();
+    hour = hour > 9 ? hour : "0" + hour;
+    minutes = minutes > 9 ? minutes : "0" + minutes;
+
+    panel['title'] = `Flush DNS | ${hour}:${minutes}`
+
     $done(panel);
 })();
 
