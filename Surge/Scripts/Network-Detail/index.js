@@ -457,9 +457,8 @@ function getNetworkInfo(retryTimes = 5, retryInterval = 1000) {
             `节点ISP：${info.isp}\n` +
             `节点位置：${getFlagEmoji(info.countryCode)} | ${info.country} - ${info.city}`
 
-        logger.log(`args.notify${args.notify}`)
         if (args.notify == 1) {
-            $notification.post(getSSID() ?? getCellularInfo(), content)
+            $notification.post('网络已改变', getSSID() ?? getCellularInfo(), content)
         }
 
         $done({
