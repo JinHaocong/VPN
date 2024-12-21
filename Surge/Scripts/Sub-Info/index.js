@@ -67,12 +67,16 @@ let args = getArgs();
 })();
 
 function getArgs() {
-    console.log(JSON.stringify($argument))
-    return Object.fromEntries(
-        $argument
-            .split("&")
-            .map((item) => item.split("="))
-    );
+    let args = {};
+    $argument.split('&').forEach(item => {
+        let idx = item.indexOf('=');
+        if (idx > 0) {
+            let key = item.slice(0, idx);
+            args[key] = item.slice(idx + 1)
+        }
+    });
+    
+    return args;
 }
 
 function getUserInfo(url) {
