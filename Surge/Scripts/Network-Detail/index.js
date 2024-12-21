@@ -457,12 +457,19 @@ function getNetworkInfo(retryTimes = 5, retryInterval = 1000) {
             `节点ISP：${info.isp}\n` +
             `节点位置：${getFlagEmoji(info.countryCode)} | ${info.country} - ${info.city}`
 
+        let now = new Date();
+        let hour = now.getHours();
+        let minutes = now.getMinutes();
+        hour = hour > 9 ? hour : "0" + hour;
+        minutes = minutes > 9 ? minutes : "0" + minutes;
+
         if (args.notify == 1) {
-            $notification.post('网络已改变', getSSID() ?? getCellularInfo(), content)
+            $notification.post('网络已改变', `${getSSID() ?? getCellularInfo()} | ${hour}:${minutes}`, content)
         }
 
+
         $done({
-            title: getSSID() ?? getCellularInfo(),
+            title: `${getSSID() ?? getCellularInfo()} | ${hour}:${minutes}`,
             content: content,
             icon: getSSID() ? 'wifi' : 'simcard',
             'icon-color': getSSID() ? '#5A9AF9' : '#8AB8DD',
