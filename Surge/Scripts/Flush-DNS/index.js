@@ -24,7 +24,7 @@
     hour = hour > 9 ? hour : "0" + hour;
     minutes = minutes > 9 ? minutes : "0" + minutes;
 
-    panel['title'] = `Flush DNS | ${hour}:${minutes}`
+    panel.title = `Flush DNS | ${hour}:${minutes}`
 
     $done(panel);
 })();
