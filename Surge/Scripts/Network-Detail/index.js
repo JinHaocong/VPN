@@ -456,17 +456,18 @@ function getNetworkInfo(retryTimes = 5, retryInterval = 1000) {
             `节点IP：${info.query}\n` +
             `节点ISP：${info.isp}\n` +
             `节点位置：${getFlagEmoji(info.countryCode)} | ${info.country} - ${info.city}`
+
+        logger.log(`args.notify${args.notify}`)
+        if (args.notify == 1) {
+            $notification.post(getSSID() ?? getCellularInfo(), content)
+        }
+
         $done({
             title: getSSID() ?? getCellularInfo(),
             content: content,
             icon: getSSID() ? 'wifi' : 'simcard',
             'icon-color': getSSID() ? '#5A9AF9' : '#8AB8DD',
         });
-
-        logger.log(`args.notify${args.notify}`)
-        if (args.notify == 1) {
-            $notification.post(getSSID() ?? getCellularInfo(), content)
-        }
     }).catch(error => {
         // 网络切换
         if (String(error).startsWith("Network changed")) {
