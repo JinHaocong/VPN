@@ -463,7 +463,7 @@ function getNetworkInfo(retryTimes = 5, retryInterval = 1000) {
             'icon-color': getSSID() ? '#5A9AF9' : '#8AB8DD',
         });
 
-        console.log(`args.notify${args.notify}`)
+        logger.log(`args.notify${args.notify}`)
         if (args.notify == 1) {
             $notification.post(getSSID() ?? getCellularInfo(), content)
         }
