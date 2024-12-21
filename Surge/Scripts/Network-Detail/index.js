@@ -12,6 +12,22 @@
  * Usage: httpMethod.post(option).then(response => { logger.log(data) }).catch(error => { logger.log(error) })
  * response: { status, headers, data }
  */
+
+let args = getArgs();
+
+function getArgs() {
+    let args = {};
+    $argument.split('&').forEach(item => {
+        let idx = item.indexOf('=');
+        if (idx > 0) {
+            let key = item.slice(0, idx);
+            args[key] = item.slice(idx + 1)
+        }
+    });
+
+    return args;
+}
+
 class httpMethod {
     /**
      * 回调函数
@@ -436,16 +452,20 @@ function getNetworkInfo(retryTimes = 5, retryInterval = 1000) {
             throw new Error(`Request error with http status code: ${response.status}\n${response.data}`);
         }
         const info = JSON.parse(response.data);
+        const content = getIP() +
+            `节点IP：${info.query}\n` +
+            `节点ISP：${info.isp}\n` +
+            `节点位置：${getFlagEmoji(info.countryCode)} | ${info.country} - ${info.city}`
         $done({
             title: getSSID() ?? getCellularInfo(),
-            content:
-                getIP() +
-                `节点IP：${info.query}\n` +
-                `节点ISP：${info.isp}\n` +
-                `节点位置：${getFlagEmoji(info.countryCode)} | ${info.country} - ${info.city}`,
+            content: content,
             icon: getSSID() ? 'wifi' : 'simcard',
             'icon-color': getSSID() ? '#5A9AF9' : '#8AB8DD',
         });
+
+        if (args.notify === '1') {
+            $notification.post('网络信息变化', getSSID() ?? getCellularInfo(), content)
+        }
     }).catch(error => {
         // 网络切换
         if (String(error).startsWith("Network changed")) {
