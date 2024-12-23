@@ -46,7 +46,14 @@ let content = ''
                 )}/s ↓ ${formatFlow(item.inMaxSpeed, 2)}/s`
         })
         .join('\n\n')
-    title = '网络接口信息'
+
+    let now = new Date();
+    let hour = now.getHours();
+    let minutes = now.getMinutes();
+    hour = hour > 9 ? hour : "0" + hour;
+    minutes = minutes > 9 ? minutes : "0" + minutes;
+
+    title = `网络接口信息 | ${hour}:${minutes}`
 })()
     .catch(async e => {
         $.logErr(e)
