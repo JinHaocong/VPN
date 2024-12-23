@@ -2,7 +2,7 @@
 #!desc=网络连通性测试
 [Script]
 
-Connectivity_Test = type=generic,timeout=3,script-path=https://raw.githubusercontent.com/JinHaocong/VPN/refs/heads/main/Surge/Scripts/Connectivity-Test/index.js,argument=title=Connectivity Test&icon=icloud.and.arrow.down&color=#FF9F0A
+Connectivity_Test = type=generic,timeout=3,script-path=https://raw.githubusercontent.com/JinHaocong/VPN/refs/heads/main/Surge/Scripts/Connectivity-Test/index.js,argument=title=连通性测试&icon=icloud.and.arrow.down&color=#FF9F0A
 
 [Panel]
 #网络连通性测试
