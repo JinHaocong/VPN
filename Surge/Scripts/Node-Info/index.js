@@ -47,15 +47,15 @@ Group-Panel = type=generic,timeout=10,script-path=https://raw.githubusercontent.
     }
 
 
-    if ($trigger == "button") {
-        index += 1;
-
-        if (index > arr.length - 1) {
-            index = 0;
-        }
-        $surge.setSelectGroupPolicy(group, proxyName[index]);
-
-    }
+    // if ($trigger == "button") {
+    //     index += 1;
+    //
+    //     if (index > arr.length - 1) {
+    //         index = 0;
+    //     }
+    //     $surge.setSelectGroupPolicy(group, proxyName[index]);
+    //
+    // }
 
 
     let name = proxyName[index];
