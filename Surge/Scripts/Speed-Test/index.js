@@ -49,7 +49,7 @@ let content = ''
     hour = hour > 9 ? hour : "0" + hour;
     minutes = minutes > 9 ? minutes : "0" + minutes;
 
-    title = `网络速率 | ${hour}:${minutes}`
+    title = `${arg.title} | ${hour}:${minutes}`
     content = `下行速率: ${round(Math.abs(speed * 8), 2)} Mbps (${round(speed, 2)} Mbs)\n网络延迟: ${pingt} ms\n测试耗时: ${round(Math.abs(duration), 2)}s`
     if ($.isTile()) {
         await notify('网络速率', '面板', '查询完成')
