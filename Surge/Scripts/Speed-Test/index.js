@@ -71,7 +71,7 @@ let content = ''
         $.done(result)
     })
     .finally(async () => {
-        const result = {title, content, icon, 'icon-color': color, ...arg}
+        const result = {content, icon, 'icon-color': color, ...arg, title}
         $.log($.toStr(result))
         $.done(result)
     })
