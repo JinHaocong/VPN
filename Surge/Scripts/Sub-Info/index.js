@@ -68,15 +68,18 @@ let args = getArgs();
 
 function getArgs() {
     let args = {};
-    let pairs = $argument.match(/([^&]+)=([^&]+)/g);
-    console.log(`正则匹配：${JSON.stringify(pairs)}`)
-    if (pairs) {
-        pairs.forEach(pair => {
-            let [key, value] = pair.split('=');
-            args[key] = decodeURIComponent(value);
-        });
-    }
-    console.log(`参数：${JSON.stringify(args)}`)
+    $argument.split('&').forEach(item => {
+        let idx = item.indexOf('=');
+        if (idx > 0) {
+            let key = item.slice(0, idx);
+            let value = item.slice(idx + 1);
+            if (key === 'url') {
+                value = decodeURIComponent(value); // 解码 URL
+            }
+            args[key] = value;
+        }
+    });
+
     return args;
 }
 
