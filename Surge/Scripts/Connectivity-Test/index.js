@@ -4,7 +4,7 @@ let $ = {
     Github: 'https://www.github.com',
     Apple: 'https://www.apple.com',
     ChatGPT: 'https://chatgpt.com/',
-    Claude: 'https://claude.ai/new'
+    Claude: 'https://claude.ai/new',
     Netflix: 'https://www.netflix.com/',
 }
 
