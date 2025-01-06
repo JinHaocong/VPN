@@ -69,12 +69,14 @@ let args = getArgs();
 function getArgs() {
     let args = {};
     let pairs = $argument.match(/([^&]+)=([^&]+)/g);
+    console.log(`正则匹配：${JSON.stringify(pairs)}`)
     if (pairs) {
         pairs.forEach(pair => {
             let [key, value] = pair.split('=');
             args[key] = decodeURIComponent(value);
         });
     }
+    console.log(`参数：${JSON.stringify(args)}`)
     return args;
 }
 
