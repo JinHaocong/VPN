@@ -5,16 +5,18 @@ let $ = {
     Apple: 'https://www.apple.com',
     ChatGPT: 'https://chatgpt.com/',
     Claude: 'https://claude.ai/new'
+    Netflix: 'https://www.netflix.com/',
 }
 
 !(async () => {
     let results = await Promise.allSettled([
         http('Google'),
         http('Github'),
+        http('Netflix'),
         http('ChatGPT'),
         http('Claude'),
-        http('Youtube'),
         http('Apple'),
+        http('Youtube'),
     ])
         .then(results => results.map(result => result.value));
 
