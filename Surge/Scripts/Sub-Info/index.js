@@ -68,14 +68,13 @@ let args = getArgs();
 
 function getArgs() {
     let args = {};
-    $argument.split('&').forEach(item => {
-        let idx = item.indexOf('=');
-        if (idx > 0) {
-            let key = item.slice(0, idx);
-            args[key] = item.slice(idx + 1)
-        }
-    });
-
+    let pairs = $argument.match(/([^&]+)=([^&]+)/g);
+    if (pairs) {
+        pairs.forEach(pair => {
+            let [key, value] = pair.split('=');
+            args[key] = decodeURIComponent(value);
+        });
+    }
     return args;
 }
 
