@@ -24,8 +24,6 @@ Group-Panel = type=generic,timeout=10,script-path=https://raw.githubusercontent.
     let params = getParams($argument);
     let group = params.group;
     let proxy = await httpAPI("/v1/policy_groups");
-    console.log(`group: ${JSON.stringify(group)}/n`);
-    console.log(`proxy: ${JSON.stringify(proxy)}/n`);
     let groupName = (await httpAPI("/v1/policy_groups/select?group_name=" + encodeURIComponent(group) + "")).policy;
     console.log(`groupName: ${JSON.stringify(groupName)}/n`);
     var proxyName = [];
