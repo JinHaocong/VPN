@@ -1,6 +1,13 @@
 # 规则名称: Global
-# 规则统计: 6771
+# 规则统计: 6793
 
+HOST,cloud.oracle.com,Global
+HOST,steambroadcast.akamaized.net,Global
+HOST,steamcommunity-a.akamaihd.net,Global
+HOST,steampipe.akamaized.net,Global
+HOST,steamstore-a.akamaihd.net,Global
+HOST,steamusercontent-a.akamaihd.net,Global
+HOST,steamuserimages-a.akamaihd.net,Global
 HOST-SUFFIX,000webhost.com,Global
 HOST-SUFFIX,030buy.com,Global
 HOST-SUFFIX,0rz.tw,Global
@@ -813,6 +820,8 @@ HOST-SUFFIX,brockbbs.com,Global
 HOST-SUFFIX,brookings.edu,Global
 HOST-SUFFIX,brucewang.net,Global
 HOST-SUFFIX,brutaltgp.com,Global
+HOST-SUFFIX,bsky.app,Global
+HOST-SUFFIX,bsky.social,Global
 HOST-SUFFIX,bt2mag.com,Global
 HOST-SUFFIX,bt95.com,Global
 HOST-SUFFIX,btaia.com,Global
@@ -1184,6 +1193,7 @@ HOST-SUFFIX,cn6.eu,Global
 HOST-SUFFIX,cna.com.tw,Global
 HOST-SUFFIX,cnabc.com,Global
 HOST-SUFFIX,cnbbnews.wordpress.com,Global
+HOST-SUFFIX,cnbeta.com.tw,Global
 HOST-SUFFIX,cnd.org,Global
 HOST-SUFFIX,cnet.com,Global
 HOST-SUFFIX,cnex.org.cn,Global
@@ -1399,6 +1409,7 @@ HOST-SUFFIX,deaftone.com,Global
 HOST-SUFFIX,debug.com,Global
 HOST-SUFFIX,deck.ly,Global
 HOST-SUFFIX,decodet.co,Global
+HOST-SUFFIX,deepai.org,Global
 HOST-SUFFIX,deepmind.com,Global
 HOST-SUFFIX,deezer.com,Global
 HOST-SUFFIX,definebabe.com,Global
@@ -1485,6 +1496,7 @@ HOST-SUFFIX,dnssec.net,Global
 HOST-SUFFIX,dnvod.tv,Global
 HOST-SUFFIX,docker.com,Global
 HOST-SUFFIX,docker.io,Global
+HOST-SUFFIX,docs.new,Global
 HOST-SUFFIX,doctorvoice.org,Global
 HOST-SUFFIX,documentingreality.com,Global
 HOST-SUFFIX,dogfartnetwork.com,Global
@@ -2561,6 +2573,7 @@ HOST-SUFFIX,greenvpn.net,Global
 HOST-SUFFIX,greenvpn.org,Global
 HOST-SUFFIX,grindr.com,Global
 HOST-SUFFIX,grotty-monday.com,Global
+HOST-SUFFIX,ground.news,Global
 HOST-SUFFIX,groups.google.cn,Global
 HOST-SUFFIX,grow.google,Global
 HOST-SUFFIX,gs-discuss.com,Global
@@ -2616,6 +2629,7 @@ HOST-SUFFIX,hacker.org,Global
 HOST-SUFFIX,hackmd.io,Global
 HOST-SUFFIX,hackthatphone.net,Global
 HOST-SUFFIX,hahlo.com,Global
+HOST-SUFFIX,haijiao.com,Global
 HOST-SUFFIX,hakkatv.org.tw,Global
 HOST-SUFFIX,handcraftedsoftware.org,Global
 HOST-SUFFIX,hanime.tv,Global
@@ -2665,6 +2679,7 @@ HOST-SUFFIX,heqinglian.net,Global
 HOST-SUFFIX,here.com,Global
 HOST-SUFFIX,heritage.org,Global
 HOST-SUFFIX,heroku.com,Global
+HOST-SUFFIX,herokuapp.com,Global
 HOST-SUFFIX,heungkongdiscuss.com,Global
 HOST-SUFFIX,hexieshe.com,Global
 HOST-SUFFIX,hexieshe.xyz,Global
@@ -2826,6 +2841,7 @@ HOST-SUFFIX,howtoforge.com,Global
 HOST-SUFFIX,hoxx.com,Global
 HOST-SUFFIX,hoyolab.com,Global
 HOST-SUFFIX,hpa.gov.tw,Global
+HOST-SUFFIX,hpjav.com,Global
 HOST-SUFFIX,hqcdp.org,Global
 HOST-SUFFIX,hqjapanesesex.com,Global
 HOST-SUFFIX,hqmovies.com,Global
@@ -2917,6 +2933,7 @@ HOST-SUFFIX,iamtopone.com,Global
 HOST-SUFFIX,iask.bz,Global
 HOST-SUFFIX,iask.ca,Global
 HOST-SUFFIX,iav19.com,Global
+HOST-SUFFIX,iavian.net,Global
 HOST-SUFFIX,ibiblio.org,Global
 HOST-SUFFIX,ibit.am,Global
 HOST-SUFFIX,iblist.com,Global
@@ -4211,7 +4228,6 @@ HOST-SUFFIX,opera-mini.net,Global
 HOST-SUFFIX,opera.com,Global
 HOST-SUFFIX,opml.radiotime.com,Global
 HOST-SUFFIX,opus-gaming.com,Global
-HOST-SUFFIX,oracle.com,Global
 HOST-SUFFIX,oraclecloud.com,Global
 HOST-SUFFIX,orchidbbs.com,Global
 HOST-SUFFIX,ordns.he.net,Global
@@ -4309,6 +4325,7 @@ HOST-SUFFIX,pbxes.org,Global
 HOST-SUFFIX,pcanywhere.net,Global
 HOST-SUFFIX,pcc.gov.tw,Global
 HOST-SUFFIX,pcdvd.com.tw,Global
+HOST-SUFFIX,pcgamestorrents.com,Global
 HOST-SUFFIX,pchome.com.tw,Global
 HOST-SUFFIX,pcij.org,Global
 HOST-SUFFIX,pcloud.com,Global
@@ -4900,6 +4917,7 @@ HOST-SUFFIX,sharpdaily.hk,Global
 HOST-SUFFIX,sharpdaily.tw,Global
 HOST-SUFFIX,shat-tibet.com,Global
 HOST-SUFFIX,shattered.io,Global
+HOST-SUFFIX,sheets.new,Global
 HOST-SUFFIX,sheikyermami.com,Global
 HOST-SUFFIX,shellfire.de,Global
 HOST-SUFFIX,shemalez.com,Global
@@ -4994,6 +5012,7 @@ HOST-SUFFIX,slaytizle.com,Global
 HOST-SUFFIX,sleazydream.com,Global
 HOST-SUFFIX,slheng.com,Global
 HOST-SUFFIX,slickvpn.com,Global
+HOST-SUFFIX,slides.new,Global
 HOST-SUFFIX,slideshare.net,Global
 HOST-SUFFIX,slime.com.tw,Global
 HOST-SUFFIX,slinkset.com,Global
@@ -5011,6 +5030,7 @@ HOST-SUFFIX,smhric.org,Global
 HOST-SUFFIX,smith.edu,Global
 HOST-SUFFIX,smyxy.org,Global
 HOST-SUFFIX,snapchat.com,Global
+HOST-SUFFIX,snapseed.com,Global
 HOST-SUFFIX,snaptu.com,Global
 HOST-SUFFIX,sndcdn.com,Global
 HOST-SUFFIX,sneakme.net,Global
@@ -6087,6 +6107,7 @@ HOST-SUFFIX,vpnworldwide.com,Global
 HOST-SUFFIX,vporn.com,Global
 HOST-SUFFIX,vpser.net,Global
 HOST-SUFFIX,vraiesagesse.net,Global
+HOST-SUFFIX,vrchat.com,Global
 HOST-SUFFIX,vrmtr.com,Global
 HOST-SUFFIX,vrsmash.com,Global
 HOST-SUFFIX,vs.com,Global
@@ -6197,6 +6218,7 @@ HOST-SUFFIX,wforum.com,Global
 HOST-SUFFIX,wha.la,Global
 HOST-SUFFIX,whatblocked.com,Global
 HOST-SUFFIX,whatbrowser.org,Global
+HOST-SUFFIX,whats.new,Global
 HOST-SUFFIX,whatsapp.com,Global
 HOST-SUFFIX,whatsapp.net,Global
 HOST-SUFFIX,whatsonweibo.com,Global
