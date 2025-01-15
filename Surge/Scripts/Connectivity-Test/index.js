@@ -3,7 +3,7 @@ let $ = {
     Google: 'https://www.google.com/generate_204',
     Github: 'https://www.github.com',
     Apple: 'https://www.apple.com',
-    ChatGPT: 'https://chatgpt.com/',
+    Chatgpt: 'https://chatgpt.com/',
     Claude: 'https://claude.ai/new',
     Netflix: 'https://www.netflix.com/',
 }
