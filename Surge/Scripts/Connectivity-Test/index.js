@@ -49,12 +49,7 @@ let $ = {
 function http(req) {
     return new Promise((r) => {
         let time = Date.now();
-        let timeout = setTimeout(() => {
-            r(formatOutput(req, '>5000', '☠️'));
-        }, 5000);
-
         $httpClient.post($[req], (err, resp, data) => {
-            clearTimeout(timeout);
             let responseTime = Date.now() - time;
             let emoji = getEmoji(responseTime);
             r(formatOutput(req, responseTime, emoji));
@@ -72,9 +67,7 @@ function getEmoji(time) {
     if (time < 200) return '⚡️';
     if (time < 300) return '🏎️';
     if (time < 400) return '🚅';
-    if (time < 500) return '🏃';
-    if (time < 1000) return '🚶';
-    if (time < 2000) return '🐢';
-    if (time < 3000) return '🐌';
+    if (time < 500) return '🐢';
+    if (time < 1000) return '🐌';
     return '☠️';
 }
