@@ -30,7 +30,7 @@ let $ = {
         // 格式化每一行
         const formattedResults = results.map(result => {
             const [name, time, emoji] = result.split(/\s+/);
-            return `${name.padEnd(12, '\u2007')} \t ${time.padStart(5, '\u2007')}ms \t ${emoji}`;
+            return `${name.padEnd(10, '\u2007')} \t ${time.padStart(5, '\u2007')}ms \t ${emoji}`;
         });
 
         // 返回所有行，用换行符连接
