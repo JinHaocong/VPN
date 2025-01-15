@@ -58,15 +58,19 @@ let args = getArgs();
 
     let content = [
         `${batteryIcon} ${usageDescription}`,
+        ``,
         `${progressBar} (${bytesToSize(used)}/${bytesToSize(total)})`
     ];
 
     if (resetDayLeft) {
+        content.push(``);
         let resetIcon = getResetIcon(resetDayLeft);
         content.push(`${resetIcon} 重置：剩余${resetDayLeft}天`);
     }
+
     if (expire && expire !== "false") {
         if (/^[\d.]+$/.test(expire)) expire *= 1000;
+        content.push(``);
         content.push(`到期：${formatTime(expire)}`);
     }
 
