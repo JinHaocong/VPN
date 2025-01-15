@@ -37,11 +37,16 @@ let $ = {
 function http(req) {
     return new Promise((r) => {
         let time = Date.now();
+        let timeout = setTimeout(() => {
+            r(`${req.padEnd(8)} >5000 ms  ${'超时'.padEnd(4)}  ☠️`);
+        }, 5000);
+
         $httpClient.post($[req], (err, resp, data) => {
+            clearTimeout(timeout);
             let responseTime = Date.now() - time;
             let emoji = getEmoji(responseTime);
             let status = getStatus(responseTime);
-            r(`${emoji.padEnd(3)} ${req.padEnd(8)} ${responseTime.toString().padStart(4)} ms  ${status.padEnd(4)}`);
+            r(`${req.padEnd(8)} ${responseTime.toString().padStart(4)} ms  ${status.padEnd(4)}  ${emoji}`);
         });
     });
 }
