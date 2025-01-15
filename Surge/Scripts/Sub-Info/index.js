@@ -131,33 +131,48 @@ function getResetIcon(days) {
 }
 
 function createProgressBar(percentage) {
-    const barLength = 10;
-    const filledLength = Math.round(barLength * percentage / 100);
-    const emptyLength = barLength - filledLength;
+    const barLength = 13;  // 分成13段
+    const filledLength = Math.round(barLength * percentage / 100);  // 已用长度
+    const emptyLength = barLength - filledLength;  // 剩余长度
 
-    let progressBar = '';
-    if (percentage <= 5) {
-        progressBar = '😎' + '🟢'.repeat(filledLength) + '⚪'.repeat(emptyLength);
-    } else if (percentage <= 10) {
-        progressBar = '😄' + '🔵'.repeat(filledLength) + '⚪'.repeat(emptyLength);
-    } else if (percentage <= 20) {
-        progressBar = '😊' + '🟣'.repeat(filledLength) + '⚪'.repeat(emptyLength);
-    } else if (percentage <= 30) {
-        progressBar = '😌' + '🟤'.repeat(filledLength) + '⚪'.repeat(emptyLength);
-    } else if (percentage <= 45) {
-        progressBar = '😐' + '🟡'.repeat(filledLength) + '⚪'.repeat(emptyLength);
-    } else if (percentage <= 60) {
-        progressBar = '😓' + '🟠'.repeat(filledLength) + '⚪'.repeat(emptyLength);
-    } else if (percentage <= 75) {
-        progressBar = '😰' + '🔺'.repeat(filledLength) + '⚪'.repeat(emptyLength);
-    } else if (percentage <= 90) {
-        progressBar = '🚨' + '🔴'.repeat(filledLength) + '⚪'.repeat(emptyLength);
+    // 心形图标数组，对应每个进度区间
+    const heartIcons = ['💚', '💙', '🩵', '💜', '❤️', '🩷', '🧡', '💛', '🤎', '🤍', '🩶', '🖤', '💔'];
+
+    // 根据 percentage 选择对应的颜色心形图标
+    let filledHearts = '';
+    if (percentage <= 7.7) {
+        filledHearts = heartIcons[0].repeat(filledLength);  // 💚
+    } else if (percentage <= 15.4) {
+        filledHearts = heartIcons[1].repeat(filledLength);  // 💙
+    } else if (percentage <= 23.1) {
+        filledHearts = heartIcons[2].repeat(filledLength);  // 🩵
+    } else if (percentage <= 30.8) {
+        filledHearts = heartIcons[3].repeat(filledLength);  // 💜
+    } else if (percentage <= 38.5) {
+        filledHearts = heartIcons[4].repeat(filledLength);  // ❤️
+    } else if (percentage <= 46.2) {
+        filledHearts = heartIcons[5].repeat(filledLength);  // 🩷
+    } else if (percentage <= 53.8) {
+        filledHearts = heartIcons[6].repeat(filledLength);  // 🧡
+    } else if (percentage <= 61.5) {
+        filledHearts = heartIcons[7].repeat(filledLength);  // 💛
+    } else if (percentage <= 69.2) {
+        filledHearts = heartIcons[8].repeat(filledLength);  // 🤎
+    } else if (percentage <= 76.9) {
+        filledHearts = heartIcons[9].repeat(filledLength);  // 🤍
+    } else if (percentage <= 84.6) {
+        filledHearts = heartIcons[10].repeat(filledLength);  // 🩶
+    } else if (percentage <= 92.3) {
+        filledHearts = heartIcons[11].repeat(filledLength);  // 🖤
     } else {
-        progressBar = '😱' + '⚫'.repeat(filledLength) + '⚪'.repeat(emptyLength);
+        filledHearts = heartIcons[12].repeat(filledLength);  // 💔
     }
 
-    return `${progressBar}`;
+    const emptyHearts = '⚪'.repeat(emptyLength);
+
+    return `${filledHearts}${emptyHearts}`;
 }
+
 
 function getArgs() {
     let args = {};
