@@ -82,23 +82,9 @@ let args = getArgs();
     hour = hour > 9 ? hour : "0" + hour;
     minutes = minutes > 9 ? minutes : "0" + minutes;
 
-    let timeEmoji, timeDescription;
-    if (hour >= 5 && hour < 12) {
-        timeEmoji = "🌅";
-        timeDescription = "早安";
-    } else if (hour >= 12 && hour < 18) {
-        timeEmoji = "☀️";
-        timeDescription = "午安";
-    } else if (hour >= 18 && hour < 22) {
-        timeEmoji = "🌆";
-        timeDescription = "晚安";
-    } else {
-        timeEmoji = "🌙";
-        timeDescription = "夜深了";
-    }
 
     $done({
-        title: `${timeEmoji} ${args.title} | ${timeDescription} ${hour}:${minutes}`,
+        title: `${args.title} | ${hour}:${minutes}`,
         content: content.join("\n"),
         icon: args.icon || "airplane.circle",
         "icon-color": args.color || "#007aff",
