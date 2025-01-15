@@ -97,34 +97,32 @@ function numberToEmoji(number) {
 }
 
 function createBatteryIcon(percentage) {
-    if (percentage <= 7.7) return '🔴';
-    if (percentage <= 15.4) return '🪫';
-    if (percentage <= 23.1) return '🪫';
-    if (percentage <= 30.8) return '🪫';
-    if (percentage <= 38.5) return '🪫';
-    if (percentage <= 46.2) return '🪫';
-    if (percentage <= 53.8) return '🔋';
-    if (percentage <= 61.5) return '🔋';
-    if (percentage <= 69.2) return '🔋';
-    if (percentage <= 76.9) return '🔋';
-    if (percentage <= 84.6) return '🔋';
-    if (percentage <= 92.3) return '🔋';
+    if (percentage <= 8.33) return '🔴';
+    if (percentage <= 16.66) return '🪫';
+    if (percentage <= 25) return '🪫';
+    if (percentage <= 33.33) return '🪫';
+    if (percentage <= 41.66) return '🪫';
+    if (percentage <= 50) return '🪫';
+    if (percentage <= 58.33) return '🔋';
+    if (percentage <= 66.66) return '🔋';
+    if (percentage <= 75) return '🔋';
+    if (percentage <= 83.33) return '🔋';
+    if (percentage <= 91.66) return '🔋';
     return '🟢';
 }
 
 function createUsageDescription(percentage) {
-    if (percentage <= 7.7) return '流量极低，务必节省 🆘';
-    if (percentage <= 15.4) return '流量告急，紧急补充 🚨';
-    if (percentage <= 23.1) return '流量偏低，节省使用 ⚠️';
-    if (percentage <= 30.8) return '流量尚可，适度使用 🐢';
-    if (percentage <= 38.5) return '流量逐渐减少，节省点使用 🐇';
-    if (percentage <= 46.2) return '流量稍紧，谨慎使用 ⚠️';
-    if (percentage <= 53.8) return '流量适中，稳步前行 ⛵';
-    if (percentage <= 61.5) return '流量充足，尽情使用 🚴';
-    if (percentage <= 69.2) return '流量丰富，使用无忧 💨';
-    if (percentage <= 76.9) return '流量非常充足，尽享畅快 🎉';
-    if (percentage <= 84.6) return '流量充沛，极速冲刺 🚀';
-    if (percentage <= 92.3) return '流量充盈，随心所欲 🌟';
+    if (percentage <= 8.33) return '流量极低，务必节省 🆘';
+    if (percentage <= 16.66) return '流量告急，紧急补充 🚨';
+    if (percentage <= 25) return '流量偏低，节省使用 ⚠️';
+    if (percentage <= 33.33) return '流量尚可，适度使用 🐢';
+    if (percentage <= 41.66) return '流量逐渐减少，节省点使用 🐇';
+    if (percentage <= 50) return '流量稍紧，谨慎使用 ⚠️';
+    if (percentage <= 58.33) return '流量适中，稳步前行 ⛵';
+    if (percentage <= 66.66) return '流量充足，尽情使用 🚴';
+    if (percentage <= 75) return '流量丰富，使用无忧 💨';
+    if (percentage <= 83.33) return '流量非常充足，尽享畅快 🎉';
+    if (percentage <= 91.66) return '流量充沛，极速冲刺 🚀';
     return '流量满满，超速前行 🚀';
 }
 
@@ -144,41 +142,39 @@ function getResetIcon(days) {
 }
 
 function createProgressBar(percentage) {
-    const barLength = 13;  // 分成13段
+    const barLength = 12;  // 分成12段
     const filledLength = Math.round(barLength * percentage / 100);  // 已用长度
     const emptyLength = barLength - filledLength;  // 剩余长度
 
     // 心形图标数组，对应每个进度区间
-    const heartIcons = ['💚', '💙', '🩵', '💜', '❤️', '🩷', '🧡', '💛', '🤎', '🤍', '🩶', '🖤', '💔'];
+    const heartIcons = ['💚', '💙', '🩵', '💜', '❤️', '🩷', '🧡', '💛', '🤎', '🩶', '🖤', '💔'];
 
     // 根据 percentage 选择对应的颜色心形图标
     let filledHearts = '';
-    if (percentage <= 7.7) {
+    if (percentage <= 8.33) {
         filledHearts = heartIcons[0].repeat(filledLength);  // 💚
-    } else if (percentage <= 15.4) {
+    } else if (percentage <= 16.66) {
         filledHearts = heartIcons[1].repeat(filledLength);  // 💙
-    } else if (percentage <= 23.1) {
+    } else if (percentage <= 25) {
         filledHearts = heartIcons[2].repeat(filledLength);  // 🩵
-    } else if (percentage <= 30.8) {
+    } else if (percentage <= 33.33) {
         filledHearts = heartIcons[3].repeat(filledLength);  // 💜
-    } else if (percentage <= 38.5) {
+    } else if (percentage <= 41.66) {
         filledHearts = heartIcons[4].repeat(filledLength);  // ❤️
-    } else if (percentage <= 46.2) {
+    } else if (percentage <= 50) {
         filledHearts = heartIcons[5].repeat(filledLength);  // 🩷
-    } else if (percentage <= 53.8) {
+    } else if (percentage <= 58.33) {
         filledHearts = heartIcons[6].repeat(filledLength);  // 🧡
-    } else if (percentage <= 61.5) {
+    } else if (percentage <= 66.66) {
         filledHearts = heartIcons[7].repeat(filledLength);  // 💛
-    } else if (percentage <= 69.2) {
+    } else if (percentage <= 75) {
         filledHearts = heartIcons[8].repeat(filledLength);  // 🤎
-    } else if (percentage <= 76.9) {
-        filledHearts = heartIcons[9].repeat(filledLength);  // 🤍
-    } else if (percentage <= 84.6) {
-        filledHearts = heartIcons[10].repeat(filledLength);  // 🩶
-    } else if (percentage <= 92.3) {
-        filledHearts = heartIcons[11].repeat(filledLength);  // 🖤
+    } else if (percentage <= 83.33) {
+        filledHearts = heartIcons[9].repeat(filledLength);  // 🩶
+    } else if (percentage <= 91.66) {
+        filledHearts = heartIcons[10].repeat(filledLength);  // 🖤
     } else {
-        filledHearts = heartIcons[12].repeat(filledLength);  // 💔
+        filledHearts = heartIcons[11].repeat(filledLength);  // 💔
     }
 
     const emptyHearts = '⚪'.repeat(emptyLength);
