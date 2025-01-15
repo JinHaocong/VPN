@@ -41,7 +41,7 @@ function http(req) {
             let responseTime = Date.now() - time;
             let emoji = getEmoji(responseTime);
             let status = getStatus(responseTime);
-            r(`${emoji} ${req.padEnd(8)} ${responseTime.toString().padStart(4)} ms ${status.padEnd(4)}`);
+            r(`${emoji.padEnd(3)} ${req.padEnd(8)} ${responseTime.toString().padStart(4)} ms  ${status.padEnd(4)}`);
         });
     });
 }
