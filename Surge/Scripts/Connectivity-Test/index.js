@@ -51,7 +51,13 @@ function http(req) {
 }
 
 function formatOutput(req, time, emoji) {
-    return `${req.padEnd(8)} ${time.toString().padEnd(5)} ms ${emoji}`;
+    const reqWidth = 10;
+    const timeWidth = 7;
+
+    let reqPadded = req.padEnd(reqWidth);
+    let timePadded = (typeof time === 'number' ? time.toString() : time).padStart(timeWidth);
+
+    return `${reqPadded} ${timePadded} ms ${emoji}`;
 }
 
 function getEmoji(time) {
