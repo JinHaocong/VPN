@@ -132,28 +132,29 @@ function getResetIcon(days) {
 
 function createProgressBar(percentage) {
     const barLength = 10;
-    const filledLength = Math.round(barLength * (100 - percentage) / 100);
+    const remainingPercentage = 100 - percentage;
+    const filledLength = Math.round(barLength * remainingPercentage / 100);
     const emptyLength = barLength - filledLength;
 
     let progressBar = '';
-    if (percentage >= 95) {
-        progressBar = '😎' + '🟢'.repeat(emptyLength) + '⚪'.repeat(filledLength);
-    } else if (percentage >= 90) {
-        progressBar = '😄' + '🔵'.repeat(emptyLength) + '⚪'.repeat(filledLength);
-    } else if (percentage >= 80) {
-        progressBar = '😊' + '🟣'.repeat(emptyLength) + '⚪'.repeat(filledLength);
-    } else if (percentage >= 70) {
-        progressBar = '😌' + '🟤'.repeat(emptyLength) + '⚪'.repeat(filledLength);
-    } else if (percentage >= 55) {
-        progressBar = '😐' + '🟡'.repeat(emptyLength) + '⚪'.repeat(filledLength);
-    } else if (percentage >= 40) {
-        progressBar = '😓' + '🟠'.repeat(emptyLength) + '⚪'.repeat(filledLength);
-    } else if (percentage >= 25) {
-        progressBar = '😰' + '🔺'.repeat(emptyLength) + '⚪'.repeat(filledLength);
-    } else if (percentage >= 10) {
-        progressBar = '🚨' + '🔴'.repeat(emptyLength) + '⚪'.repeat(filledLength);
+    if (remainingPercentage >= 95) {
+        progressBar = '😎' + '🟢'.repeat(filledLength) + '⚪'.repeat(emptyLength);
+    } else if (remainingPercentage >= 90) {
+        progressBar = '😄' + '🔵'.repeat(filledLength) + '⚪'.repeat(emptyLength);
+    } else if (remainingPercentage >= 80) {
+        progressBar = '😊' + '🟣'.repeat(filledLength) + '⚪'.repeat(emptyLength);
+    } else if (remainingPercentage >= 70) {
+        progressBar = '😌' + '🟤'.repeat(filledLength) + '⚪'.repeat(emptyLength);
+    } else if (remainingPercentage >= 55) {
+        progressBar = '😐' + '🟡'.repeat(filledLength) + '⚪'.repeat(emptyLength);
+    } else if (remainingPercentage >= 40) {
+        progressBar = '😓' + '🟠'.repeat(filledLength) + '⚪'.repeat(emptyLength);
+    } else if (remainingPercentage >= 25) {
+        progressBar = '😰' + '🔺'.repeat(filledLength) + '⚪'.repeat(emptyLength);
+    } else if (remainingPercentage >= 10) {
+        progressBar = '🚨' + '🔴'.repeat(filledLength) + '⚪'.repeat(emptyLength);
     } else {
-        progressBar = '😱' + '⚫'.repeat(emptyLength) + '⚪'.repeat(filledLength);
+        progressBar = '😱' + '⚫'.repeat(filledLength) + '⚪'.repeat(emptyLength);
     }
 
     return `${progressBar}`;
