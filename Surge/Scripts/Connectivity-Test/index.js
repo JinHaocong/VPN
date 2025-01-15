@@ -64,6 +64,7 @@ function formatOutput(req, time, emoji) {
 }
 
 function getEmoji(time) {
+    if (time == 0) return '☠️';
     if (time < 100) return '🚀';
     if (time < 200) return '⚡️';
     if (time < 300) return '🏎️';
