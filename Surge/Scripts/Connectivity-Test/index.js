@@ -38,9 +38,28 @@ function http(req) {
     return new Promise((r) => {
         let time = Date.now();
         $httpClient.post($[req], (err, resp, data) => {
-            r(req +
-                '\xa0\xa0\xa0\t: ' +
-                (Date.now() - time) + ' ms');
+            let responseTime = Date.now() - time;
+            let emoji = getEmoji(responseTime);
+            let status = getStatus(responseTime);
+            r(`${emoji} ${req.padEnd(8)} ${status.padEnd(10)} ${responseTime} ms`);
         });
     });
+}
+
+function getEmoji(time) {
+    if (time < 100) return '🚀';
+    if (time < 200) return '⚡';
+    if (time < 500) return '🏃';
+    if (time < 1000) return '🚶';
+    if (time < 2000) return '🐢';
+    return '🐌';
+}
+
+function getStatus(time) {
+    if (time < 100) return '极速';
+    if (time < 200) return '快速';
+    if (time < 500) return '正常';
+    if (time < 1000) return '较慢';
+    if (time < 2000) return '慢速';
+    return '超时';
 }
