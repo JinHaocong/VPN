@@ -59,7 +59,8 @@ let args = getArgs();
     let content = [
         `${batteryIcon} ${usageDescription}`,
         ``,
-        `${progressBar} (${bytesToSize(used)}/${bytesToSize(total)})`
+        `${progressBar}`,
+        `(${bytesToSize(used)}/${bytesToSize(total)}) ${usagePercentage.toFixed(1)}% `
     ];
 
     if (resetDayLeft) {
@@ -169,7 +170,7 @@ function createProgressBar(percentage) {
         progressBar = '😎' + '⚫'.repeat(filledLength) + '⚪'.repeat(emptyLength);
     }
 
-    return `${progressBar} ${percentage.toFixed(1)}%`;
+    return `${progressBar}`;
 }
 
 function getArgs() {
