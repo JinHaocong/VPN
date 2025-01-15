@@ -34,7 +34,7 @@ let $ = {
         // 格式化每一行
         const formattedResults = results.map(result => {
             const [name, time, emoji] = result.split(/\s+/);
-            return `${name.padEnd(maxNameLength)} ${time.padStart(5)}ms ${emoji}`;
+            return `${name.padEnd(maxNameLength)}\t${time.padStart(5)}ms\t${emoji}`;
         });
 
         // 返回所有行，用换行符连接
