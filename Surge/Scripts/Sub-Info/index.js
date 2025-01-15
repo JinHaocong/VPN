@@ -60,7 +60,7 @@ let args = getArgs();
         `${batteryIcon} ${usageDescription}`,
         ``,
         `${progressBar}`,
-        `(${bytesToSize(used)}/${bytesToSize(total)}) ${usagePercentage.toFixed(1)}% `
+        `(${bytesToSize(used)}/${bytesToSize(total)})   ${usagePercentage.toFixed(1)}% `
     ];
 
     if (resetDayLeft) {
