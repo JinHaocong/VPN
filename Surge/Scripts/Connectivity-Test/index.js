@@ -60,7 +60,7 @@ function http(req) {
 }
 
 function formatOutput(req, time, emoji) {
-    return `${req.padEnd(20, ' ')} ${time.toString().padStart(6, ' ')}ms  ${emoji}`;
+    return `${req.padEnd(20, ' ')} ${time.toString().padStart(6, ' ') + '  '}ms  ${emoji}`;
 }
 
 function getEmoji(time) {
