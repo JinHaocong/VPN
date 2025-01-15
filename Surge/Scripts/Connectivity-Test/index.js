@@ -47,27 +47,25 @@ function http(req) {
 }
 
 function getEmoji(time) {
-    if (time < 50) return '🚀';
-    if (time < 100) return '⚡️';
-    if (time < 200) return '🏎️';
-    if (time < 300) return '🚅';
-    if (time < 500) return '🏃';
-    if (time < 750) return '🚶';
-    if (time < 1000) return '🐕';
-    if (time < 1500) return '🐢';
-    if (time < 2000) return '🐌';
-    return '☠️';
+    if (time < 100) return '🚀';  // 极速
+    if (time < 200) return '⚡️';  // 非常快
+    if (time < 300) return '🏎️';  // 快速
+    if (time < 400) return '🚅';  // 高速
+    if (time < 500) return '🏃';  // 较快
+    if (time < 1000) return '🚶'; // 正常
+    if (time < 2000) return '🐢'; // 慢
+    if (time < 3000) return '🐌'; // 很慢
+    return '☠️';                  // 超时
 }
 
 function getStatus(time) {
-    if (time < 50) return '极速';
-    if (time < 100) return '非常快';
-    if (time < 200) return '快速';
-    if (time < 300) return '高速';
+    if (time < 100) return '极速';
+    if (time < 200) return '非常快';
+    if (time < 300) return '快速';
+    if (time < 400) return '高速';
     if (time < 500) return '较快';
-    if (time < 750) return '正常';
-    if (time < 1000) return '较慢';
-    if (time < 1500) return '慢';
-    if (time < 2000) return '很慢';
+    if (time < 1000) return '正常';
+    if (time < 2000) return '慢';
+    if (time < 3000) return '很慢';
     return '超时';
 }
