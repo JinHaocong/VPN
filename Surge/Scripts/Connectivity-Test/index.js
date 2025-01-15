@@ -28,13 +28,10 @@ let $ = {
 
 
     const formatMethod = () => {
-        // 找出最长的名称长度
-        const maxNameLength = Math.max(...results.map(result => result.split(/\s+/)[0].length));
-
         // 格式化每一行
         const formattedResults = results.map(result => {
             const [name, time, emoji] = result.split(/\s+/);
-            return `${name.padEnd(maxNameLength)}\t${time.padStart(5)}ms\t${emoji}`;
+            return `${name}\t${time}ms\t${emoji}`;
         });
 
         // 返回所有行，用换行符连接
@@ -67,7 +64,7 @@ function http(req) {
 }
 
 function formatOutput(req, time, emoji) {
-    return `${req} ${time.toString()}ms ${emoji}`;
+    return `${req} ${time.toString()} ${emoji}`;
 }
 
 function getEmoji(time) {
