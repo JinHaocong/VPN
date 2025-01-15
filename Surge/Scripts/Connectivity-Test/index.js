@@ -28,14 +28,11 @@ let $ = {
 
 
     const formatMethod = () => {
-        // 格式化每一行
         const formattedResults = results.map(result => {
             const [name, time, emoji] = result.split(/\s+/);
-            return `${name.padEnd(20)}\t${time.padStart(5)}ms\t${emoji}`;
+            return `<span style="font-family: monospace;">${name.padEnd(10)}${time.padStart(5)}ms</span> ${emoji}`;
         });
-
-        // 返回所有行，用换行符连接
-        return formattedResults.join('\n');
+        return formattedResults.join('<br>');
     };
 
     $done({
