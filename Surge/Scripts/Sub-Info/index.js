@@ -97,24 +97,37 @@ function numberToEmoji(number) {
 }
 
 function createBatteryIcon(percentage) {
-    if (percentage > 95) return '🔋';
-    if (percentage > 80) return '🔋';
-    if (percentage > 60) return '🔋';
-    if (percentage > 40) return '🪫';
-    if (percentage > 20) return '🪫';
-    if (percentage > 10) return '🪫';
-    return '🔴';
+    if (percentage <= 7.7) return '🔴';
+    if (percentage <= 15.4) return '🪫';
+    if (percentage <= 23.1) return '🪫';
+    if (percentage <= 30.8) return '🪫';
+    if (percentage <= 38.5) return '🪫';
+    if (percentage <= 46.2) return '🪫';
+    if (percentage <= 53.8) return '🔋';
+    if (percentage <= 61.5) return '🔋';
+    if (percentage <= 69.2) return '🔋';
+    if (percentage <= 76.9) return '🔋';
+    if (percentage <= 84.6) return '🔋';
+    if (percentage <= 92.3) return '🔋';
+    return '🟢';
 }
 
 function createUsageDescription(percentage) {
-    if (percentage > 90) return '流量充沛，随心所欲 🚀';
-    if (percentage > 75) return '流量充足，尽情使用 💨';
-    if (percentage > 60) return '流量宽裕，稳步前行 ⛵';
-    if (percentage > 45) return '流量尚可，适度使用 🚶';
-    if (percentage > 30) return '流量偏低，注意节省 🐢';
-    if (percentage > 15) return '流量告急，谨慎使用 🚨';
-    return '流量告罄，紧急补充 🆘';
+    if (percentage <= 7.7) return '流量极低，务必节省 🆘';
+    if (percentage <= 15.4) return '流量告急，紧急补充 🚨';
+    if (percentage <= 23.1) return '流量偏低，节省使用 ⚠️';
+    if (percentage <= 30.8) return '流量尚可，适度使用 🐢';
+    if (percentage <= 38.5) return '流量逐渐减少，节省点使用 🐇';
+    if (percentage <= 46.2) return '流量稍紧，谨慎使用 ⚠️';
+    if (percentage <= 53.8) return '流量适中，稳步前行 ⛵';
+    if (percentage <= 61.5) return '流量充足，尽情使用 🚴';
+    if (percentage <= 69.2) return '流量丰富，使用无忧 💨';
+    if (percentage <= 76.9) return '流量非常充足，尽享畅快 🎉';
+    if (percentage <= 84.6) return '流量充沛，极速冲刺 🚀';
+    if (percentage <= 92.3) return '流量充盈，随心所欲 🌟';
+    return '流量满满，超速前行 🚀';
 }
+
 
 function getResetIcon(days) {
     if (days <= 1) return '🚨';
