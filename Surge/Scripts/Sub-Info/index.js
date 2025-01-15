@@ -45,17 +45,25 @@ let args = getArgs();
 
     // 计算使用百分比
     let usagePercentage = (used / total) * 100;
+    let remainingPercentage = 100 - usagePercentage;
 
     // 创建进度条
     let progressBar = createProgressBar(usagePercentage);
 
+    // 创建电池图标
+    let batteryIcon = createBatteryIcon(remainingPercentage);
+
+    // 创建用量描述
+    let usageDescription = createUsageDescription(remainingPercentage);
+
     let content = [
-        `用量：${bytesToSize(used)} | ${bytesToSize(total)}`,
-        progressBar
+        `${batteryIcon} ${usageDescription}`,
+        `${progressBar} (${bytesToSize(used)}/${bytesToSize(total)})`
     ];
 
     if (resetDayLeft) {
-        content.push(`重置：剩余${resetDayLeft}天`);
+        let resetIcon = getResetIcon(resetDayLeft);
+        content.push(`${resetIcon} 重置：剩余${resetDayLeft}天`);
     }
     if (expire && expire !== "false") {
         if (/^[\d.]+$/.test(expire)) expire *= 1000;
@@ -75,6 +83,29 @@ let args = getArgs();
         "icon-color": args.color || "#007aff",
     });
 })();
+
+// 新增函数：创建电池图标
+function createBatteryIcon(percentage) {
+    if (percentage > 75) return '🔋';
+    if (percentage > 50) return '🔋';
+    if (percentage > 25) return '🪫';
+    return '🪫';
+}
+
+// 新增函数：创建用量描述
+function createUsageDescription(percentage) {
+    if (percentage > 75) return '流量充足，尽情使用 🚀';
+    if (percentage > 50) return '流量充沛，稳步前行 ⛵';
+    if (percentage > 25) return '流量尚可，注意节省 🚶';
+    return '流量告急，谨慎使用 🐢';
+}
+
+function getResetIcon(days) {
+    if (days <= 3) return '🚨'; // 剩余3天或更少
+    if (days <= 7) return '⚠️'; // 剩余7天或更少
+    if (days <= 15) return '📅'; // 剩余15天或更少
+    return '🔄'; // 超过15天
+}
 
 function createProgressBar(percentage) {
     const barLength = 15;
