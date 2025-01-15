@@ -84,38 +84,59 @@ let args = getArgs();
     });
 })();
 
-// 新增函数：创建电池图标
 function createBatteryIcon(percentage) {
-    if (percentage > 75) return '🔋';
-    if (percentage > 50) return '🔋';
-    if (percentage > 25) return '🪫';
-    return '🪫';
+    if (percentage > 95) return '🔋';
+    if (percentage > 80) return '🔋';
+    if (percentage > 60) return '🔋';
+    if (percentage > 40) return '🪫';
+    if (percentage > 20) return '🪫';
+    if (percentage > 10) return '🪫';
+    return '🔴';
 }
 
-// 新增函数：创建用量描述
 function createUsageDescription(percentage) {
-    if (percentage > 75) return '流量充足，尽情使用 🚀';
-    if (percentage > 50) return '流量充沛，稳步前行 ⛵';
-    if (percentage > 25) return '流量尚可，注意节省 🚶';
-    return '流量告急，谨慎使用 🐢';
+    if (percentage > 90) return '流量充沛，随心所欲 🚀';
+    if (percentage > 75) return '流量充足，尽情使用 💨';
+    if (percentage > 60) return '流量宽裕，稳步前行 ⛵';
+    if (percentage > 45) return '流量尚可，适度使用 🚶';
+    if (percentage > 30) return '流量偏低，注意节省 🐢';
+    if (percentage > 15) return '流量告急，谨慎使用 🚨';
+    return '流量告罄，紧急补充 🆘';
 }
 
 function getResetIcon(days) {
-    if (days <= 3) return '🚨'; // 剩余3天或更少
-    if (days <= 7) return '⚠️'; // 剩余7天或更少
-    if (days <= 15) return '📅'; // 剩余15天或更少
-    return '🔄'; // 超过15天
+    if (days <= 1) return '🚨';
+    if (days <= 2) return '⏰';
+    if (days <= 3) return '📅';
+    if (days <= 5) return '🗓️';
+    if (days <= 7) return '📆';
+    if (days <= 10) return '🔟';
+    if (days <= 14) return '🏃';
+    if (days <= 21) return '⏳';
+    if (days <= 28) return '🌓';
+    if (days <= 31) return '🌕';
+    return '🔄';
 }
 
 function createProgressBar(percentage) {
-    const barLength = 15;
+    const barLength = 10;
     const filledLength = Math.round(barLength * percentage / 100);
     const emptyLength = barLength - filledLength;
 
-    const filledBar = '■'.repeat(filledLength);
-    const emptyBar = '□'.repeat(emptyLength);
+    let progressBar = '';
+    if (percentage <= 10) {
+        progressBar = '🚨' + '🔹'.repeat(filledLength) + '⚪'.repeat(emptyLength);
+    } else if (percentage <= 30) {
+        progressBar = '😰' + '🟡'.repeat(filledLength) + '⚪'.repeat(emptyLength);
+    } else if (percentage <= 60) {
+        progressBar = '😐' + '🟢'.repeat(filledLength) + '⚪'.repeat(emptyLength);
+    } else if (percentage <= 80) {
+        progressBar = '😊' + '🔵'.repeat(filledLength) + '⚪'.repeat(emptyLength);
+    } else {
+        progressBar = '😎' + '🟣'.repeat(filledLength) + '⚪'.repeat(emptyLength);
+    }
 
-    return `${filledBar}${emptyBar} ${percentage.toFixed(0)}%`;
+    return `${progressBar} ${percentage.toFixed(0)}%`;
 }
 
 function getArgs() {
