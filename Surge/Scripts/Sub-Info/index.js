@@ -65,13 +65,14 @@ let args = getArgs();
     if (resetDayLeft) {
         content.push(``);
         let resetIcon = getResetIcon(resetDayLeft);
-        content.push(`${resetIcon} 重置：剩余${resetDayLeft}天`);
+        let daysEmoji = numberToEmoji(resetDayLeft);
+        content.push(`${resetIcon} 重置：${daysEmoji}天`);
     }
 
     if (expire && expire !== "false") {
         if (/^[\d.]+$/.test(expire)) expire *= 1000;
         content.push(``);
-        content.push(`到期：${formatTime(expire)}`);
+        content.push(`📅 到期：${formatTime(expire)}`);
     }
 
     let now = new Date();
@@ -102,6 +103,11 @@ let args = getArgs();
         "icon-color": args.color || "#007aff",
     });
 })();
+
+function numberToEmoji(number) {
+    const emojiNumbers = ['0️⃣', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣'];
+    return number.toString().split('').map(digit => emojiNumbers[parseInt(digit)]).join('');
+}
 
 function createBatteryIcon(percentage) {
     if (percentage > 95) return '🔋';
@@ -248,5 +254,5 @@ function formatTime(time) {
     let year = dateObj.getFullYear();
     let month = dateObj.getMonth() + 1;
     let day = dateObj.getDate();
-    return year + "年" + month + "月" + day + "日";
+    return numberToEmoji(year) + "年" + numberToEmoji(month) + "月" + numberToEmoji(day) + "日";
 }
