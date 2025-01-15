@@ -149,19 +149,27 @@ function createProgressBar(percentage) {
     const emptyLength = barLength - filledLength;
 
     let progressBar = '';
-    if (percentage <= 10) {
-        progressBar = '🚨' + '🔹'.repeat(filledLength) + '⚪'.repeat(emptyLength);
+    if (percentage <= 5) {
+        progressBar = '😱' + '🔴'.repeat(filledLength) + '⚪'.repeat(emptyLength);
+    } else if (percentage <= 10) {
+        progressBar = '🚨' + '🔺'.repeat(filledLength) + '⚪'.repeat(emptyLength);
+    } else if (percentage <= 20) {
+        progressBar = '😰' + '🟠'.repeat(filledLength) + '⚪'.repeat(emptyLength);
     } else if (percentage <= 30) {
-        progressBar = '😰' + '🟡'.repeat(filledLength) + '⚪'.repeat(emptyLength);
-    } else if (percentage <= 60) {
+        progressBar = '😓' + '🟡'.repeat(filledLength) + '⚪'.repeat(emptyLength);
+    } else if (percentage <= 45) {
         progressBar = '😐' + '🟢'.repeat(filledLength) + '⚪'.repeat(emptyLength);
-    } else if (percentage <= 80) {
-        progressBar = '😊' + '🔵'.repeat(filledLength) + '⚪'.repeat(emptyLength);
+    } else if (percentage <= 60) {
+        progressBar = '😌' + '🔵'.repeat(filledLength) + '⚪'.repeat(emptyLength);
+    } else if (percentage <= 75) {
+        progressBar = '😊' + '🟣'.repeat(filledLength) + '⚪'.repeat(emptyLength);
+    } else if (percentage <= 90) {
+        progressBar = '😄' + '🟤'.repeat(filledLength) + '⚪'.repeat(emptyLength);
     } else {
-        progressBar = '😎' + '🟣'.repeat(filledLength) + '⚪'.repeat(emptyLength);
+        progressBar = '😎' + '⚫'.repeat(filledLength) + '⚪'.repeat(emptyLength);
     }
 
-    return `${progressBar} ${percentage.toFixed(0)}%`;
+    return `${progressBar} ${percentage.toFixed(1)}%`;
 }
 
 function getArgs() {
