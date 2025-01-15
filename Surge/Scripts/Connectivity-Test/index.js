@@ -26,21 +26,28 @@ let $ = {
     hour = hour > 9 ? hour : "0" + hour;
     minutes = minutes > 9 ? minutes : "0" + minutes;
 
+
+    const formatMethod = () => {
+        return results.map(result => {
+            const [name, time, emoji] = result.split(/\s+/);
+            return `${name}\t${time}\t${emoji}`;
+        }).join('\n');
+    };
+
     $done({
         title: `连通性测试 | ${hour}:${minutes}`,
-        content: `┌─────────────────┬──────────┬────────┐
-${results.join('\n')}
-└─────────────────┴──────────┴────────┘`,
+        // 选择使用其中一种方法
+        content: formatMethod(),
         icon: 'timer',
         'icon-color': '#FF5A9AF9',
-    })
+    });
 })();
 
 function http(req) {
     return new Promise((r) => {
         let time = Date.now();
         let timeout = setTimeout(() => {
-            r(formatOutput(req, '>5000', '超时', '☠️'));
+            r(formatOutput(req, '>5000', '☠️'));
         }, 5000);
 
         $httpClient.post($[req], (err, resp, data) => {
@@ -53,18 +60,17 @@ function http(req) {
 }
 
 function formatOutput(req, time, emoji) {
-    // 使用半角空格补齐，确保对齐
-    return `│ ${req.padEnd(13)} │ ${(typeof time === 'number' ? time.toString() : time).padStart(6)} ms │ ${emoji} │`;
+    return `${req.padEnd(15)}${time.toString().padStart(8)} ms  ${emoji}`;
 }
 
 function getEmoji(time) {
-    if (time < 100) return '🚀';  // 极速
-    if (time < 200) return '⚡️';  // 非常快
-    if (time < 300) return '🏎️';  // 快速
-    if (time < 400) return '🚅';  // 高速
-    if (time < 500) return '🏃';  // 较快
-    if (time < 1000) return '🚶'; // 正常
-    if (time < 2000) return '🐢'; // 慢
-    if (time < 3000) return '🐌'; // 很慢
-    return '☠️';                  // 超时
+    if (time < 100) return '🚀';
+    if (time < 200) return '⚡️';
+    if (time < 300) return '🏎️';
+    if (time < 400) return '🚅';
+    if (time < 500) return '🏃';
+    if (time < 1000) return '🚶';
+    if (time < 2000) return '🐢';
+    if (time < 3000) return '🐌';
+    return '☠️';
 }
