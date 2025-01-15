@@ -13,7 +13,7 @@ let $ = {
         http('Google'),
         http('Github'),
         http('Netflix'),
-        http('ChatGPT'),
+        http('Chatgpt'),
         http('Claude'),
         http('Apple'),
         http('Youtube'),
