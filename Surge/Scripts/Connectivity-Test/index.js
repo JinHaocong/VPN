@@ -38,17 +38,20 @@ function http(req) {
     return new Promise((r) => {
         let time = Date.now();
         let timeout = setTimeout(() => {
-            r(`${req.padEnd(8)} >5000 ms  ${'超时'.padEnd(4)}  ☠️`);
+            r(formatOutput(req, '>5000', '超时', '☠️'));
         }, 5000);
 
         $httpClient.post($[req], (err, resp, data) => {
             clearTimeout(timeout);
             let responseTime = Date.now() - time;
             let emoji = getEmoji(responseTime);
-            let status = getStatus(responseTime);
-            r(`${req.padEnd(8)} ${responseTime.toString().padStart(4)} ms  ${status.padEnd(4)}  ${emoji}`);
+            r(formatOutput(req, responseTime, emoji));
         });
     });
+}
+
+function formatOutput(req, time, emoji) {
+    return `${req.padEnd(8)} ${time.toString().padEnd(5)} ms ${emoji}`;
 }
 
 function getEmoji(time) {
@@ -61,16 +64,4 @@ function getEmoji(time) {
     if (time < 2000) return '🐢'; // 慢
     if (time < 3000) return '🐌'; // 很慢
     return '☠️';                  // 超时
-}
-
-function getStatus(time) {
-    if (time < 100) return '极速';
-    if (time < 200) return '非常快';
-    if (time < 300) return '快速';
-    if (time < 400) return '高速';
-    if (time < 500) return '较快';
-    if (time < 1000) return '正常';
-    if (time < 2000) return '慢';
-    if (time < 3000) return '很慢';
-    return '超时';
 }
