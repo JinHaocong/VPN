@@ -42,7 +42,17 @@ let args = getArgs();
     let used = info.download + info.upload;
     let total = info.total;
     let expire = args.expire || info.expire;
-    let content = [`用量：${bytesToSize(used)} | ${bytesToSize(total)}`];
+    
+    // 计算使用百分比
+    let usagePercentage = (used / total) * 100;
+    
+    // 创建进度条
+    let progressBar = createProgressBar(usagePercentage);
+    
+    let content = [
+        `用量：${bytesToSize(used)} | ${bytesToSize(total)}`,
+        progressBar
+    ];
 
     if (resetDayLeft) {
         content.push(`重置：剩余${resetDayLeft}天`);
@@ -65,6 +75,18 @@ let args = getArgs();
         "icon-color": args.color || "#007aff",
     });
 })();
+
+// 新增函数：创建进度条
+function createProgressBar(percentage) {
+    const barLength = 20;
+    const filledLength = Math.round(barLength * percentage / 100);
+    const emptyLength = barLength - filledLength;
+    
+    const filledBar = '▓'.repeat(filledLength);
+    const emptyBar = '░'.repeat(emptyLength);
+    
+    return `[${filledBar}${emptyBar}] ${percentage.toFixed(2)}%`;
+}
 
 function getArgs() {
     let args = {};
