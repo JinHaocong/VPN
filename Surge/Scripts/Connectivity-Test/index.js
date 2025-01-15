@@ -26,13 +26,15 @@ let $ = {
     hour = hour > 9 ? hour : "0" + hour;
     minutes = minutes > 9 ? minutes : "0" + minutes;
 
-
     const formatMethod = () => {
+        // 格式化每一行
         const formattedResults = results.map(result => {
             const [name, time, emoji] = result.split(/\s+/);
-            return `<span style="font-family: monospace;">${name.padEnd(10)}${time.padStart(5)}ms</span> ${emoji}`;
+            return `${name.padEnd(10, '\u2007')}\t${time.padStart(5)}ms\t${emoji}`;
         });
-        return formattedResults.join('<br>');
+
+        // 返回所有行，用换行符连接
+        return formattedResults.join('\n');
     };
 
     $done({
