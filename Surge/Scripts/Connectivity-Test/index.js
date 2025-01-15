@@ -3,7 +3,7 @@ let $ = {
     Google: 'https://www.google.com/generate_204',
     Github: 'https://www.github.com',
     Apple: 'https://www.apple.com',
-    Chatgpt: 'https://chatgpt.com/',
+    ChatGPT: 'https://chatgpt.com/',
     Claude: 'https://claude.ai/new',
     Netflix: 'https://www.netflix.com/',
 }
@@ -13,7 +13,7 @@ let $ = {
         http('Google'),
         http('Github'),
         http('Netflix'),
-        http('Chatgpt'),
+        http('ChatGPT'),
         http('Claude'),
         http('Apple'),
         http('Youtube'),
@@ -60,7 +60,7 @@ function http(req) {
 }
 
 function formatOutput(req, time, emoji) {
-    return `${req.padEnd(20, ' ')} ${time.toString().padStart(6, ' ') + '  '}ms  ${emoji}`;
+    return `${req} ${time.toString()}ms ${emoji}`;
 }
 
 function getEmoji(time) {
