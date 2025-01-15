@@ -28,7 +28,9 @@ let $ = {
 
     $done({
         title: `连通性测试 | ${hour}:${minutes}`,
-        content: results.join('\n'),
+        content: `┌─────────────────┬──────────┬────────┐
+${results.join('\n')}
+└─────────────────┴──────────┴────────┘`,
         icon: 'timer',
         'icon-color': '#FF5A9AF9',
     })
@@ -51,17 +53,8 @@ function http(req) {
 }
 
 function formatOutput(req, time, emoji) {
-    // 定义每列的宽度
-    const reqWidth = 15;    // 请求列宽度
-    const timeWidth = 8;    // 时间列宽度
-    const emojiWidth = 4;   // emoji列宽度
-
-    // 对齐处理
-    let reqPadded = req.padEnd(reqWidth);  // 左对齐
-    let timePadded = (typeof time === 'number' ? time.toString() : time).padStart(timeWidth);  // 右对齐
-    let emojiPadded = emoji.padStart(emojiWidth);  // emoji右对齐
-
-    return `${reqPadded}${timePadded} ms ${emojiPadded}`;
+    // 使用半角空格补齐，确保对齐
+    return `│ ${req.padEnd(13)} │ ${(typeof time === 'number' ? time.toString() : time).padStart(6)} ms │ ${emoji} │`;
 }
 
 function getEmoji(time) {
